@@ -1,0 +1,11 @@
+<!-- À coller dans un composant "Embed" de Framer (mode HTML).
+     Remplace TON-SITE par l'adresse Netlify, par ex. instamirror.netlify.app -->
+<iframe id="instamirror-cfg" src="https://TON-SITE/configurateur.html"
+  style="width:100%;height:1900px;border:0;display:block" title="Configurateur Instamirror"></iframe>
+<script>
+  window.addEventListener("message", function (e) {
+    if (e.data && e.data.instamirrorHeight) {
+      document.getElementById("instamirror-cfg").style.height = e.data.instamirrorHeight + "px";
+    }
+  });
+</script>
