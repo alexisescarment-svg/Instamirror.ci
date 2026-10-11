@@ -64,15 +64,17 @@ section{padding-block:clamp(64px,9vw,120px)}
 .ci .flag{font-size:clamp(40px,6vw,60px);box-shadow:none}
 .ci h2{font-size:clamp(24px,3.4vw,36px)}
 .ci p{color:#D9D2C6;margin-top:6px;max-width:58ch}
-.ig{display:block;text-decoration:none;background:#fff;border:1px solid var(--line);border-radius:24px;padding:clamp(16px,3vw,32px);max-width:760px;transition:box-shadow .2s}
+.ig{display:block;text-decoration:none;background:#fff;border:1px solid var(--line);border-radius:24px;padding:clamp(16px,3vw,32px);max-width:900px;transition:box-shadow .2s}
 .ig:hover{box-shadow:0 12px 40px rgba(31,27,22,.10)}
 .ig-head{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:16px;align-items:center;margin-bottom:20px}
 .ig-ring{display:block;width:84px;aspect-ratio:1;border-radius:50%;padding:3px;background:conic-gradient(from 210deg,#FFD7A1,#E9A24C,#FF3B3B,#B33DAE,#FFD7A1)}
 .ig-ring img{width:100%;height:100%;border-radius:50%;border:3px solid #fff;object-fit:cover;background:#000}
 .ig-user{font-weight:700;font-size:18px}
 .ig-bio{color:var(--muted);font-size:15px;line-height:1.45;margin-top:2px}
-.ig-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;border-radius:12px;overflow:hidden}
-.ig-grid img{width:100%;aspect-ratio:1;object-fit:cover}
+.ig-name{font-weight:600;font-size:15px}
+.ig-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:3px;border-radius:12px;overflow:hidden}
+.ig-grid img{width:100%;aspect-ratio:4/5;object-fit:cover}
+@media (max-width:640px){.ig-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.ig-grid img:nth-child(n+10){display:none}}
 .btn .ig-mini{width:24px;height:24px;border-radius:50%;flex:none;background:#000}
 @media (max-width:560px){.ig-head{grid-template-columns:auto minmax(0,1fr)}.ig-head .btn{grid-column:1/-1}.ig-ring{width:68px}}
 
@@ -473,17 +475,24 @@ Adresse.
           <span class="ig-ring"><img src="img/logo-square.png" alt=""></span>
           <div>
             <p class="ig-user">instamirror.ci</p>
-            <p class="ig-bio">Instamirror · Miroirs lumineux personnalisés au format post Instagram. Abidjan <span class="flag" aria-hidden="true"></span></p>
+            <p class="ig-name">Instamirror CI <span class="flag" aria-hidden="true"></span></p>
+            <p class="ig-bio">🪞 Le miroir qui vous fait de la pub<br><span class="flag" aria-hidden="true"></span> Made in Côte d'Ivoire<br>👇 Créez le vôtre</p>
           </div>
           <span class="btn btn-led">Suivre</span>
         </div>
         <div class="ig-grid">
-          <img src="img/hero.jpg" alt="Miroir Instamirror allumé" loading="lazy">
-          <img src="img/jungle-selfie.jpg" alt="Selfie dans le miroir noir de The Jungle" loading="lazy">
-          <img src="img/chezpichi.jpg" alt="Selfie dans le miroir blanc de Chez Pichi" loading="lazy">
-          <img src="img/mrchour.jpg" alt="Miroir lumineux de Mr Chour" loading="lazy">
-          <img src="img/chezpichi-2.jpg" alt="Miroir blanc sur chevalet chez Chez Pichi" loading="lazy">
-          <img src="img/specs-atelier.jpg" alt="Miroir Instamirror et ses dimensions" loading="lazy">
+          <img src="img/ig/post-01.jpg" alt="Deux amies dans un miroir Instamirror en extérieur" loading="lazy">
+          <img src="img/ig/post-02.jpg" alt="Selfie dans le miroir noir de The Jungle" loading="lazy">
+          <img src="img/ig/post-03.jpg" alt="Miroir Instamirror lumineux et ses zones personnalisables" loading="lazy">
+          <img src="img/ig/post-04.jpg" alt="Les dimensions du miroir Instamirror" loading="lazy">
+          <img src="img/ig/post-05.jpg" alt="Instamirror, le miroir qui rend votre lieu viral" loading="lazy">
+          <img src="img/ig/post-06.jpg" alt="Selfie devant un miroir Instamirror dans un restaurant" loading="lazy">
+          <img src="img/ig/post-07.jpg" alt="Deux amies devant un miroir Instamirror sur un mur terracotta" loading="lazy">
+          <img src="img/ig/post-08.jpg" alt="Selfie dans un miroir Instamirror en boutique" loading="lazy">
+          <img src="img/ig/post-09.jpg" alt="Miroir Instamirror sur chevalet devant un mur terracotta" loading="lazy">
+          <img src="img/ig/post-10.jpg" alt="Selfie à deux dans un miroir Instamirror en terrasse" loading="lazy">
+          <img src="img/ig/post-11.jpg" alt="Miroir Instamirror lumineux dans un restaurant le soir" loading="lazy">
+          <img src="img/ig/post-12.jpg" alt="Miroir Instamirror lumineux dans un hall" loading="lazy">
         </div>
       </a>
     </div>
