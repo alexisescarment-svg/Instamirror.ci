@@ -110,7 +110,7 @@ header.scrolled{border-bottom-color:var(--line)}
 /* the 3D mirror: studio plate + live print + LED halo */
 .studio{position:relative;display:grid;justify-items:center}
 .studio::before{content:"";position:absolute;inset:6% -8% 4% -8%;background:radial-gradient(closest-side,#FFFFFF 0%,rgba(255,255,255,0) 72%);z-index:-1}
-.m3{position:relative;width:min(390px,100%);aspect-ratio:760/1541}
+.m3{position:relative;width:min(340px,100%);aspect-ratio:760/1820}
 .m3>*{position:absolute;inset:0;width:100%;height:100%}
 .m3 .halo{opacity:0;transition:opacity 1.2s var(--ease);overflow:visible}
 .m3.lit .halo{opacity:1}
@@ -122,7 +122,7 @@ header.scrolled{border-bottom-color:var(--line)}
   .hero-txt{grid-area:txt}.hero-try{grid-area:try}.hero-trust{grid-area:trust}
   .hero-txt{text-align:center;display:grid;justify-items:center}
   .lead{margin-inline:auto}
-  .hero-mir .m3{width:min(230px,56vw);margin-top:12px;transform:translateX(8%)}
+  .hero-mir .m3{width:min(210px,52vw);margin-top:12px}
   .studio .cap{display:none}
   .try{margin:6px auto 0}
   .hero-trust{justify-content:center;margin-top:24px}
@@ -224,7 +224,7 @@ input:focus,textarea:focus{outline:none;border-color:var(--or);box-shadow:0 0 0 
 .msg.ok{background:#E7F3EC;color:#14532D}
 .msg.ko{background:#FBEAEA;color:#7F1D1D}
 .stage{position:sticky;top:92px;display:grid;justify-items:center;gap:16px;padding:clamp(20px,3vw,32px) clamp(16px,2vw,24px);border-radius:var(--r-lg);background:radial-gradient(120% 80% at 50% 35%,#FFFFFF 0%,var(--bg-2) 100%);border:1px solid var(--line)}
-.stage .m3{width:min(360px,100%)}
+.stage .m3{width:min(320px,100%)}
 .stage .cap{font-size:13px;color:var(--muted);text-align:center;margin-top:-4%}
 .stage .quick{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
 .chip{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);font:inherit;font-size:14px;font-weight:500;cursor:pointer;transition:border-color .2s}
@@ -615,7 +615,7 @@ Adresse.
   // 63 cm = 2419 px, so 120 cm = 4608 px; the mirror zone fills the gap between the two panels.
   var W=2419, H=4608, TOP=719, BOT=1286, BY=H-BOT;
   // 3D studio plates (rendered in three.js) and where the printed face lands on them, in plate pixels.
-  var PLATE={w:760,h:1541,quad:[[91.47, 117.01], [545.04, 106.65], [543.61, 1014.1], [92.87, 1002.79]],src:{Blanche:"img/miroir-3d-blanc.webp",Noire:"img/miroir-3d-noir.webp"}};
+  var PLATE={w:760,h:1820,quad:[[96.85,104.93],[663.15,104.93],[661.38,1180.8],[98.62,1180.8]],src:{Blanche:"img/miroir-3d-blanc.webp",Noire:"img/miroir-3d-noir.webp"}};
 
   function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
   function val(id){return $(id).value}
