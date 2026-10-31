@@ -7,35 +7,20 @@
 <meta property="og:title" content="Instamirror, le miroir qui rend votre lieu viral">
 <meta property="og:description" content="Miroir Instagram personnalisé et lumineux, fabriqué en Côte d'Ivoire.">
 <meta property="og:image" content="img/jungle-selfie.jpg">
-<meta name="theme-color" content="#FBF9F5">
+<meta name="theme-color" content="#FFFFFF">
 <link rel="icon" href="img/logo-square.png">
 <title>Instamirror · Miroir Instagram personnalisé à Abidjan</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=Roboto:wght@400;700&family=Montserrat:wght@700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800;900&family=Roboto:wght@400;700&family=Montserrat:wght@700&display=swap">
 <link rel="preload" as="image" href="img/miroir-3d-blanc.webp" type="image/webp">
 <style>
 /*
-  Design system (generated with ui-ux-pro-max, 2026-10-12)
-  Pattern: Interactive configurator landing. The hero is the product: a 3D render of the
-  neutral mirror on its easel, and the visitor's name is written on it as they type.
-  Style: minimal and spacious, neutral studio background, realistic product, minimal UI.
-  Palette (chosen by Alexis, 2026-10-11): blanc cassé & doré. Gold is for actions only.
-  Type: Playfair Display for headings, Inter for text. Roboto/Montserrat stay inside
-  the mirror because that is what the real mirror prints.
-  Icons: inline SVG (Lucide shapes), never emoji.
+  Design « Le Post » (frontend-design, 2026-10-31): the site speaks Instagram's own interface.
+  Client stories, hero as a post whose photo is the live 3D mirror, steps as a carousel, FAQ as comments.
+  Palette: Instagram white and greys, gold (#C9A45C) for actions only. Type: Schibsted Grotesk;
+  Roboto/Montserrat stay inside the mirror because that is what the real mirror prints.
 */
-:root{
-  --bg:#FBF9F5; --bg-2:#F3EEE6; --card:#FFFFFF; --ink:#1F1B16; --ink-2:#3A332B; --muted:#6B6359;
-  --line:#E6E0D5; --or:#C9A45C; --or-hover:#D5B470; --or-text:#8A6727; --led:#FFD7A1;
-  --wa:#1C8C4E; --err:#B3261E; --ok:#1C7C47;
-  --serif:"Playfair Display", Georgia, "Times New Roman", serif;
-  --sans:"Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --r-sm:10px; --r:16px; --r-lg:28px;
-  --shadow:0 1px 2px rgba(31,27,22,.04), 0 12px 32px rgba(31,27,22,.07);
-  --ease:cubic-bezier(.2,.7,.2,1);
-  color-scheme:light;
-}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:80px;-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
@@ -44,384 +29,333 @@ img{max-width:100%;height:auto;display:block}
 a{color:inherit}
 p{margin:0}
 h1,h2,h3{margin:0;text-wrap:balance}
-h1,h2{font-family:var(--serif);font-weight:600;letter-spacing:-.015em;line-height:1.08}
-h1{font-size:clamp(40px,6vw,74px)}
-h2{font-size:clamp(30px,4.2vw,50px)}
-h3{font-family:var(--sans);font-size:18px;font-weight:600;line-height:1.3}
-em{font-style:italic;color:var(--or-text)}
 .wrap{max-width:1200px;margin:0 auto;padding-inline:max(20px,env(safe-area-inset-left))}
-section{padding-block:clamp(72px,10vw,128px)}
-.eyebrow{font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--or-text)}
-.intro{display:grid;gap:14px;max-width:62ch;margin-bottom:clamp(36px,5vw,60px)}
-.intro p{color:var(--muted);font-size:18px}
-.center{text-align:center;margin-inline:auto;justify-items:center}
-
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:12px 24px;border-radius:999px;font:inherit;font-weight:600;font-size:16px;text-decoration:none;border:1.5px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;transition:background-color .2s var(--ease),border-color .2s var(--ease),transform .2s var(--ease)}
+:focus-visible{outline:2px solid var(--acc-text);outline-offset:3px;border-radius:4px}
+.flag{display:inline-block;width:1.5em;height:1em;flex:none;border-radius:2px;background:linear-gradient(90deg,#F77F00 0 33.34%,#FFFFFF 0 66.67%,#009E60 0);box-shadow:0 0 0 1px rgba(0,0,0,.14);vertical-align:-.14em}
+.ico{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:12px 24px;border-radius:var(--r-btn);font:inherit;font-weight:600;font-size:16px;line-height:1.2;text-decoration:none;border:1.5px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;transition:background-color .2s,border-color .2s,color .2s}
 .btn:hover{background:var(--ink);color:var(--bg)}
-.btn:active{transform:scale(.98)}
-.btn-or{background:var(--or);border-color:var(--or);color:var(--ink)}
-.btn-or:hover{background:var(--or-hover);border-color:var(--or-hover);color:var(--ink)}
-.btn-ink{background:var(--ink);color:var(--bg)}
-.btn-ink:hover{background:var(--ink-2);border-color:var(--ink-2)}
-.btn-wa{background:var(--wa);border-color:var(--wa);color:#fff}
+.btn-acc{background:var(--acc);border-color:var(--acc);color:var(--acc-ink)}
+.btn-acc:hover{background:var(--acc-hover);border-color:var(--acc-hover);color:var(--acc-ink)}
+.btn-wa{background:#1C8C4E;border-color:#1C8C4E;color:#fff}
 .btn-wa:hover{background:#17773F;border-color:#17773F;color:#fff}
 .btn svg{width:20px;height:20px;flex:none}
 .btn[disabled]{opacity:.6;cursor:progress}
-:focus-visible{outline:2px solid var(--or-text);outline-offset:3px;border-radius:6px}
-.ico{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
-.flag{display:inline-block;width:1.5em;height:1em;flex:none;border-radius:3px;background:linear-gradient(90deg,#F77F00 0 33.34%,#FFFFFF 0 66.67%,#009E60 0);box-shadow:0 0 0 1px rgba(31,27,22,.14);vertical-align:-.14em}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
 
-/* ---------- header ---------- */
-header{position:sticky;top:0;z-index:30;background:rgba(251,249,245,.88);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid transparent;padding-top:env(safe-area-inset-top);transition:border-color .2s}
-header.scrolled{border-bottom-color:var(--line)}
-.nav{display:flex;align-items:center;gap:24px;min-height:68px}
-.logo{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:600;font-size:21px;text-decoration:none}
-.logo img{width:32px;height:32px;border-radius:8px}
-.nav ul{display:flex;gap:28px;list-style:none;margin:0 0 0 auto;padding:0;font-size:15px;font-weight:500}
-.nav ul a{text-decoration:none;color:var(--muted);transition:color .2s}
-.nav ul a:hover{color:var(--ink)}
-.nav .btn{min-height:44px;padding:8px 18px;font-size:15px}
-@media (max-width:920px){.nav ul{display:none}.nav .btn{margin-left:auto}}
-
-/* ---------- hero ---------- */
-.hero{padding-block:clamp(28px,5vw,64px) clamp(56px,8vw,96px);overflow:hidden}
-.hero .wrap{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);grid-template-areas:"left mir";column-gap:clamp(24px,5vw,72px);align-items:center}
-.hero-left{grid-area:left}
-.hero-mir{grid-area:mir}
-.made{display:inline-flex;align-items:center;gap:10px;padding:8px 16px 8px 12px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-weight:600;font-size:14px;margin-bottom:24px}
-.made .flag{font-size:18px}
-.lead{font-size:clamp(17px,1.5vw,20px);color:var(--muted);max-width:40ch;margin-top:22px}
-.try{margin-top:34px;max-width:470px}
-.try label{display:block;font-size:15px;font-weight:500;margin-bottom:10px}
-.try .box{display:flex;align-items:center;background:var(--card);border:1.5px solid var(--line);border-radius:999px;padding:5px 5px 5px 20px;gap:4px;box-shadow:var(--shadow);transition:border-color .2s,box-shadow .2s}
-.try .box:focus-within{border-color:var(--or);box-shadow:0 0 0 4px rgba(201,164,92,.22),var(--shadow)}
-.try .at{font-family:Roboto,Arial,sans-serif;font-weight:700;color:var(--ink);font-size:18px}
-.try input{flex:1;min-width:0;border:0;background:transparent;font:700 18px/1.2 Roboto,Arial,sans-serif;color:var(--ink);padding:12px 4px}
-.try input::placeholder{color:#A39A8E;font-weight:400}
-.try .box input,.try .box input:focus,.try .box input:hover{outline:none;border:0;background:transparent;box-shadow:none;min-height:0}
-.try .btn{min-height:46px;padding:8px 20px}
-.try .hint{font-size:14px;color:var(--muted);margin-top:10px}
-.hero-trust{margin-top:36px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
-.avatars{display:flex}
-.avatars img{width:40px;height:40px;border-radius:50%;object-fit:cover;background:#fff;border:2px solid var(--bg);margin-left:-10px}
-.avatars img:first-child{margin-left:0}
-.hero-trust b{color:var(--ink);font-weight:600}
-
-/* the 3D mirror: studio plate + live print + LED halo */
-.studio{position:relative;display:grid;justify-items:center}
-.studio::before{content:"";position:absolute;inset:6% -8% 4% -8%;background:radial-gradient(closest-side,#FFFFFF 0%,rgba(255,255,255,0) 72%);z-index:-1}
+/* live 3D mirror (plate + print + LED halo), driven by the shared script */
 .m3{position:relative;width:min(420px,100%);aspect-ratio:760/1480}
 .m3>*{position:absolute;inset:0;width:100%;height:100%}
-.m3 .halo{opacity:0;transition:opacity 1.2s var(--ease);overflow:visible}
+.m3 .halo{opacity:0;transition:opacity 1.2s ease;overflow:visible}
 .m3.lit .halo{opacity:1}
 .m3.white .print{mix-blend-mode:multiply}
-.studio .cap{font-size:13px;color:var(--muted);margin-top:-6%;text-align:center}
-@media (max-width:860px){
-  .hero .wrap{grid-template-columns:minmax(0,1fr);grid-template-areas:"txt" "mir" "try" "trust"}
-  .hero-left{display:contents}
-  .hero-txt{grid-area:txt}.hero-try{grid-area:try}.hero-trust{grid-area:trust}
-  .hero-txt{text-align:center;display:grid;justify-items:center}
-  .lead{margin-inline:auto}
-  .hero-mir .m3{width:min(320px,82vw);margin-top:12px}
-  .studio .cap{display:none}
-  .try{margin:6px auto 0}
-  .hero-trust{justify-content:center;margin-top:24px}
+
+/* header + mobile bar (the script needs #hdr and #bar) */
+header{position:sticky;top:0;z-index:30;padding-top:env(safe-area-inset-top);transition:border-color .2s,box-shadow .2s}
+.nav{display:flex;align-items:center;gap:24px;min-height:64px}
+.nav ul{display:flex;gap:26px;list-style:none;margin:0 0 0 auto;padding:0;font-size:15px;font-weight:500}
+.nav ul a{text-decoration:none;color:var(--muted)}
+.nav ul a:hover{color:var(--ink)}
+.nav .btn{min-height:42px;padding:8px 18px;font-size:15px}
+@media (max-width:920px){.nav ul{display:none}.nav .btn{margin-left:auto}}
+.bar{display:none}
+@media (max-width:760px){
+  body{padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+  .bar{display:flex;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:40;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:var(--bar-bg);backdrop-filter:blur(12px);border-top:1px solid var(--line);transition:transform .25s}
+  .bar.hide{transform:translateY(110%)}
+  .bar .btn{flex:1;min-height:50px;padding-inline:14px}
+  .bar .btn-wa{flex:0 0 auto;width:54px;padding:0}
 }
 
-/* ---------- reveal on scroll ---------- */
-.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
-.reveal.in{opacity:1;transform:none}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}.reveal{opacity:1;transform:none}}
+/* try box */
+.try .box{display:flex;align-items:center;gap:4px;background:var(--field);border:1.5px solid var(--line);padding:5px 5px 5px 18px;border-radius:var(--r-btn)}
+.try .box:focus-within{border-color:var(--acc-text)}
+.try .at{font:700 18px Roboto,Arial,sans-serif}
+.try input{flex:1;min-width:0;border:0;background:transparent;font:700 18px/1.2 Roboto,Arial,sans-serif;color:var(--ink);padding:12px 4px;outline:none}
+.try input::placeholder{color:var(--muted);font-weight:400;opacity:.8}
+.try .btn{min-height:46px;padding:8px 20px}
 
-/* ---------- clients ---------- */
-#clients{background:var(--bg-2)}
-.wall{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,2vw,24px)}
-.wall figure{margin:0;border-radius:var(--r-lg);overflow:hidden;background:var(--card);box-shadow:var(--shadow)}
-.wall img{width:100%;aspect-ratio:4/5;object-fit:cover}
-.wall figcaption{padding:16px 20px;font-size:15px;color:var(--muted);display:flex;align-items:center;gap:12px}
-.wall figcaption img{width:36px;height:36px;aspect-ratio:1;border-radius:50%;object-fit:cover;border:1px solid var(--line)}
-.wall figcaption b{color:var(--ink);font-weight:600;display:block;line-height:1.3}
-@media (max-width:760px){.wall{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:78%;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;margin-inline:-20px;padding-inline:20px}.wall figure{scroll-snap-align:center}}
-
-/* ---------- benefits ---------- */
-.feats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,2vw,20px);list-style:none;margin:0;padding:0}
-.feats li{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:28px 24px;display:grid;gap:12px;align-content:start}
-.feats .ic{width:48px;height:48px;border-radius:14px;background:var(--bg-2);display:grid;place-items:center;color:var(--or-text)}
-.feats p{color:var(--muted);font-size:16px}
-@media (max-width:980px){.feats{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:560px){.feats{grid-template-columns:minmax(0,1fr)}}
-
-/* ---------- steps ---------- */
-.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(16px,3vw,32px);list-style:none;margin:0;padding:0;counter-reset:s}
-.steps li{counter-increment:s;display:grid;gap:10px;align-content:start;padding-top:22px;border-top:1px solid var(--ink)}
-.steps li::before{content:"0" counter(s);font-family:var(--serif);font-size:44px;line-height:1;color:var(--or-text)}
-.steps p{color:var(--muted);font-size:16px}
-@media (max-width:860px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:520px){.steps{grid-template-columns:minmax(0,1fr)}}
-
-/* ---------- product ---------- */
-#miroir{background:var(--bg-2)}
-.product{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(28px,6vw,80px);align-items:center}
-.product img{width:100%;border-radius:var(--r-lg);box-shadow:var(--shadow)}
-.product .txt{display:grid;gap:18px}
-.product .txt>p{color:var(--muted);font-size:18px}
-.specs{display:grid;grid-template-columns:auto minmax(0,1fr);margin:10px 0 0;border-top:1px solid var(--line)}
-.specs dt,.specs dd{padding:14px 0;border-bottom:1px solid var(--line);margin:0}
-.specs dt{color:var(--muted);font-size:15px;padding-right:28px}
-.specs dd{font-weight:500}
-@media (max-width:860px){.product{grid-template-columns:minmax(0,1fr)}.product img{max-width:440px;margin-inline:auto}}
-
-/* ---------- made in CI ---------- */
-.ci{position:relative;background:var(--ink);color:#FBF9F5;padding-block:clamp(40px,6vw,64px)}
-.ci::before{content:"";position:absolute;inset:0 0 auto 0;height:6px;background:linear-gradient(90deg,#F77F00 0 33.34%,#FFFFFF 0 66.67%,#009E60 0)}
-.ci .wrap{display:flex;align-items:center;gap:clamp(18px,3vw,32px);flex-wrap:wrap}
-.ci .flag{font-size:clamp(44px,6vw,64px);box-shadow:none}
-.ci h2{font-size:clamp(26px,3.4vw,38px)}
-.ci p{color:#D9D2C6;margin-top:8px;max-width:60ch}
-
-/* ---------- configurator ---------- */
-.config{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(24px,4vw,56px);align-items:start}
-form{display:grid;gap:18px}
-fieldset{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--card);padding:24px;margin:0;display:grid;gap:18px;min-width:0}
-legend{float:left;width:100%;padding:0;font-family:var(--serif);font-size:24px;font-weight:600;display:flex;align-items:center;gap:12px}
-legend .n{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--bg-2);font-family:var(--sans);font-size:14px;font-weight:600;color:var(--or-text)}
+/* configurator form */
+form#cfg{display:grid;gap:18px}
+fieldset{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);padding:24px;margin:0;display:grid;gap:18px;min-width:0}
+legend{float:left;width:100%;padding:0;font-family:var(--display);font-size:22px;font-weight:600;display:flex;align-items:center;gap:12px;line-height:1.2}
+legend .n{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--chip);font-family:var(--sans);font-size:14px;font-weight:600;color:var(--acc-text)}
 legend+*{clear:both}
 .field{display:grid;gap:7px;min-width:0}
 .field label,.lbl{font-size:15px;font-weight:500}
 .opt{color:var(--muted);font-weight:400}
 .help{font-size:14px;color:var(--muted)}
-input,textarea{font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:var(--r-sm);padding:12px 14px;min-height:48px;width:100%;transition:border-color .2s,box-shadow .2s}
-textarea{min-height:128px;resize:vertical;line-height:1.5}
-input:hover,textarea:hover{border-color:#D4CCBF}
-input:focus,textarea:focus{outline:none;border-color:var(--or);box-shadow:0 0 0 4px rgba(201,164,92,.2);background:#fff}
-.bad input{border-color:var(--err)}
+#cfg input,#cfg textarea{font:inherit;font-size:16px;color:var(--ink);background:var(--field);border:1.5px solid var(--line);border-radius:var(--r-sm);padding:12px 14px;min-height:48px;width:100%;transition:border-color .2s,box-shadow .2s}
+#cfg textarea{min-height:128px;resize:vertical;line-height:1.5}
+#cfg input:focus,#cfg textarea:focus{outline:none;border-color:var(--acc-text);box-shadow:0 0 0 3px var(--ring)}
+.bad input{border-color:#B3261E!important}
 .bad .err{display:block}
-.err{display:none;color:var(--err);font-size:14px}
+.err{display:none;color:#B3261E;font-size:14px}
 .row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 @media (max-width:560px){.row{grid-template-columns:minmax(0,1fr)}.row4{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.seg{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:5px;background:var(--bg-2);border-radius:14px}
-.seg label{position:relative;display:flex;align-items:center;justify-content:center;gap:10px;min-height:48px;border-radius:10px;font-weight:500;cursor:pointer;transition:background-color .2s,box-shadow .2s}
-.seg input{position:absolute;opacity:0;width:1px;height:1px;min-height:0}
-.seg label:has(input:checked){background:var(--card);box-shadow:0 1px 3px rgba(31,27,22,.12)}
-.seg label:has(input:focus-visible){outline:2px solid var(--or-text);outline-offset:2px}
-.sw{width:18px;height:18px;border-radius:50%;border:1px solid rgba(31,27,22,.25);flex:none}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:5px;background:var(--chip);border-radius:calc(var(--r-sm) + 4px)}
+.seg label{position:relative;display:flex;align-items:center;justify-content:center;gap:10px;min-height:46px;border-radius:var(--r-sm);font-weight:500;cursor:pointer}
+#cfg .seg input{position:absolute;opacity:0;width:1px;height:1px;min-height:0}
+.seg label:has(input:checked){background:var(--surface);box-shadow:0 1px 3px rgba(0,0,0,.14)}
+.seg label:has(input:focus-visible){outline:2px solid var(--acc-text);outline-offset:2px}
+.sw{width:18px;height:18px;border-radius:50%;border:1px solid rgba(0,0,0,.25);flex:none}
 .sw.w{background:#fff}.sw.b{background:#161413}
-.sw.on{background:var(--led);box-shadow:0 0 10px 2px rgba(255,190,110,.8);border-color:#E9A24C}
+.sw.on{background:#FFD7A1;box-shadow:0 0 10px 2px rgba(255,190,110,.8);border-color:#E9A24C}
 .sw.off{background:#D8D2C8}
-.drop{display:flex;align-items:center;gap:14px;border:1.5px dashed #D4CCBF;border-radius:var(--r);padding:12px;cursor:pointer;background:var(--bg);transition:border-color .2s,background-color .2s}
-.drop:hover{border-color:var(--or)}
-.drop:focus-within{border-color:var(--or);box-shadow:0 0 0 4px rgba(201,164,92,.2)}
-.drop input{position:absolute;opacity:0;width:1px;height:1px;min-height:0}
+.drop{display:flex;align-items:center;gap:14px;border:1.5px dashed var(--line);border-radius:var(--r-sm);padding:12px;cursor:pointer;background:var(--field)}
+.drop:hover,.drop:focus-within{border-color:var(--acc-text)}
+#cfg .drop input{position:absolute;opacity:0;width:1px;height:1px;min-height:0}
 .drop .av{width:56px;height:56px;border-radius:50%;border:1px solid var(--line);background:#fff center/cover no-repeat;display:grid;place-items:center;font:700 9px/1.15 Roboto,Arial,sans-serif;color:#9a9a9a;text-align:center;flex:none}
 .drop span:last-child{font-size:15px;color:var(--muted)}
 .hp{position:absolute;left:-9999px}
 .send{display:grid;gap:12px;justify-items:start}
-.send .btn{min-height:54px;padding-inline:32px;font-size:17px}
+.send .btn{min-height:54px;padding-inline:32px;font-size:17px;background:var(--ink);color:var(--bg)}
+.send .btn:hover{opacity:.9}
 .note{font-size:14px;color:var(--muted);display:flex;gap:8px;align-items:center}
-.note .ico{width:18px;height:18px;color:var(--ok)}
-.msg{border-radius:var(--r);padding:14px 16px;font-size:15px}
+.note .ico{width:18px;height:18px;color:#1C7C47}
+.msg{border-radius:var(--r-sm);padding:14px 16px;font-size:15px}
 .msg.ok{background:#E7F3EC;color:#14532D}
 .msg.ko{background:#FBEAEA;color:#7F1D1D}
-.stage{position:sticky;top:92px;display:grid;justify-items:center;gap:16px;padding:clamp(20px,3vw,32px) clamp(16px,2vw,24px);border-radius:var(--r-lg);background:radial-gradient(120% 80% at 50% 35%,#FFFFFF 0%,var(--bg-2) 100%);border:1px solid var(--line)}
-.stage .m3{width:min(400px,100%)}
-.stage .cap{font-size:13px;color:var(--muted);text-align:center;margin-top:-4%}
-.stage .quick{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
-.chip{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:var(--card);font:inherit;font-size:14px;font-weight:500;cursor:pointer;transition:border-color .2s}
-.chip:hover{border-color:var(--or)}
-.chip[aria-pressed="true"]{border-color:var(--ink)}
+.config{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(24px,4vw,56px);align-items:start}
+.stage{position:sticky;top:88px;display:grid;justify-items:center;gap:12px}
+.stage .m3{width:min(390px,100%)}
+.stage .cap{font-size:13px;color:var(--muted);text-align:center}
 @media (max-width:980px){
   .config{grid-template-columns:minmax(0,1fr)}
-  .stage{order:-1;top:68px;z-index:5;grid-template-columns:auto minmax(0,1fr);justify-items:start;align-items:center;padding:10px 14px;border-radius:0 0 20px 20px;margin-inline:-20px;background:rgba(243,238,230,.96);backdrop-filter:blur(10px)}
-  .stage .m3{width:96px}
-  .stage .cap{text-align:left;margin:0}
-  .stage .quick{grid-column:2;justify-content:flex-start}
-  .stage .chip{min-height:36px;padding:4px 12px;font-size:13px}
+  .stage{order:-1;top:64px;z-index:5;grid-template-columns:auto minmax(0,1fr);justify-items:start;align-items:center;padding:10px 14px;margin-inline:-20px;background:var(--bar-bg);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .stage .m3{width:92px}
+  .stage .cap{text-align:left}
 }
 
-/* ---------- instagram ---------- */
-.ig{display:block;text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:clamp(18px,3vw,32px);max-width:920px;margin-inline:auto;transition:box-shadow .25s var(--ease)}
-.ig:hover{box-shadow:0 16px 48px rgba(31,27,22,.10)}
-.ig-head{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:18px;align-items:center;margin-bottom:22px}
-.ig-ring{display:block;width:86px;aspect-ratio:1;border-radius:50%;padding:3px;background:conic-gradient(from 210deg,#FFD7A1,#E9A24C,#FF3B3B,#B33DAE,#FFD7A1)}
-.ig-ring img{width:100%;height:100%;border-radius:50%;border:3px solid #fff;object-fit:cover;background:#000}
-.ig-user{font-weight:700;font-size:18px}
-.ig-name{font-weight:500;font-size:15px;display:flex;align-items:center;gap:8px}
-.ig-bio{color:var(--muted);font-size:15px;line-height:1.5;margin-top:4px}
-.ig-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:3px;border-radius:14px;overflow:hidden}
-.ig-grid img{width:100%;aspect-ratio:4/5;object-fit:cover;transition:opacity .2s}
-.ig:hover .ig-grid img{opacity:.92}
-@media (max-width:640px){.ig-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.ig-grid img:nth-child(n+10){display:none}.ig-head{grid-template-columns:auto minmax(0,1fr)}.ig-head .btn{grid-column:1/-1}.ig-ring{width:68px}}
-
-/* ---------- faq ---------- */
-.faq{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(28px,5vw,72px);align-items:start}
-.faq .intro{position:sticky;top:100px;margin:0}
+/* faq */
 details{border-bottom:1px solid var(--line)}
 details:first-child{border-top:1px solid var(--line)}
-summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px 0;font-weight:600;font-size:17px;min-height:48px}
+summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 0;font-weight:600;font-size:17px;min-height:48px}
 summary::-webkit-details-marker{display:none}
-summary::after{content:"";width:12px;height:12px;flex:none;border-right:2px solid var(--ink);border-bottom:2px solid var(--ink);transform:rotate(45deg) translate(-3px,-3px);transition:transform .25s var(--ease)}
+summary::after{content:"";width:10px;height:10px;flex:none;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translate(-3px,-3px);transition:transform .25s}
 details[open] summary::after{transform:rotate(225deg) translate(-3px,-3px)}
-details p{padding:0 0 22px;color:var(--muted);max-width:64ch}
-@media (max-width:860px){.faq{grid-template-columns:minmax(0,1fr)}.faq .intro{position:static}}
-
-/* ---------- final ---------- */
-.final .wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(28px,5vw,72px);align-items:center;background:var(--ink);color:var(--bg);border-radius:var(--r-lg);padding:clamp(28px,5vw,64px);max-width:1160px}
-.final p{color:#D9D2C6;margin-top:16px;max-width:46ch}
-.final .num{display:inline-block;font-family:var(--serif);font-size:clamp(26px,3vw,36px);margin-top:20px;text-decoration:none;color:#fff}
-.final .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
-.final .btn:not(.btn-wa){border-color:#fff;color:#fff}
-.final .btn:not(.btn-wa):hover{background:#fff;color:var(--ink)}
-.final img.ph{border-radius:var(--r);aspect-ratio:4/5;object-fit:cover}
-.ig-mini{width:24px;height:24px;border-radius:50%;flex:none;background:#000}
-@media (max-width:860px){.final .wrap{grid-template-columns:minmax(0,1fr);margin-inline:20px}.final img.ph{max-height:420px;width:100%}}
-
-footer{padding:40px 0 calc(40px + env(safe-area-inset-bottom));font-size:14px;color:var(--muted)}
+details p{padding:0 0 20px;color:var(--muted);max-width:64ch}
+footer{padding:36px 0 calc(36px + env(safe-area-inset-bottom));font-size:14px;color:var(--muted)}
 footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;align-items:center}
 footer a{text-decoration:none}
 footer span{display:inline-flex;align-items:center;gap:8px}
 
-/* ---------- mobile action bar ---------- */
-.bar{display:none}
-@media (max-width:760px){
-  body{padding-bottom:calc(76px + env(safe-area-inset-bottom))}
-  .bar{display:flex;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:40;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:rgba(251,249,245,.95);backdrop-filter:blur(12px);border-top:1px solid var(--line);transition:transform .25s var(--ease)}
-  .bar.hide{transform:translateY(110%)}
-  .bar .btn{flex:1;min-height:50px;padding-inline:14px}
-  .bar .btn-wa{flex:0 0 auto;width:54px;padding:0}
-}
+
+:root{--bg:#FFFFFF;--surface:#FFFFFF;--soft:#FAFAFA;--ink:#262626;--muted:#737373;--line:#DBDBDB;--chip:#EFEFEF;--field:#FAFAFA;
+  --acc:#C9A45C;--acc-hover:#D5B470;--acc-ink:#262626;--acc-text:#8A6727;--ring:rgba(201,164,92,.25);--bar-bg:rgba(255,255,255,.95);
+  --r:12px;--r-sm:8px;--r-btn:8px;--sans:"Schibsted Grotesk",system-ui,sans-serif;--display:"Schibsted Grotesk",system-ui,sans-serif;
+  --ring-grad:conic-gradient(from 200deg,#FFE3B8,#E9B867,#A87A2E,#E9B867,#FFE3B8);color-scheme:light}
+header{background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:22px;letter-spacing:-.03em;text-decoration:none}
+.logo img{width:30px;height:30px;border-radius:8px}
+h1,h2{font-weight:800;letter-spacing:-.035em;line-height:1.02}
+h2{font-size:clamp(30px,4vw,46px)}
+h3{font-size:17px;font-weight:700}
+section{padding-block:clamp(56px,8vw,104px)}
+.sec-head{display:grid;gap:10px;max-width:58ch;margin-bottom:clamp(28px,4vw,44px)}
+.sec-head p{color:var(--muted);font-size:18px}
+.handle{font-weight:700}
+
+/* stories: the four real clients, then yours */
+.stories{border-bottom:1px solid var(--line);background:var(--soft)}
+.stories ul{display:flex;gap:clamp(16px,3vw,34px);list-style:none;margin:0 auto;padding-block:18px;overflow-x:auto}
+.stories li{display:grid;justify-items:center;gap:6px;flex:none;width:84px;font-size:13px;text-align:center;line-height:1.25}
+.story{display:block;width:72px;height:72px;border-radius:50%;padding:3px;background:var(--ring-grad)}
+.story img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:3px solid #fff;background:#fff}
+.story.add{background:none;border:1.5px dashed #B9B9B9;display:grid;place-items:center;font-size:30px;font-weight:300;color:var(--muted);text-decoration:none}
+.stories a{text-decoration:none}
+
+/* hero: a post. Media = the live mirror, caption = the headline */
+.hero{padding-block:clamp(28px,5vw,64px)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,470px) minmax(0,1fr);gap:clamp(28px,6vw,88px);align-items:center}
+.post{border:1px solid var(--line);border-radius:var(--r);background:#fff;overflow:hidden}
+.post-top{display:flex;align-items:center;gap:12px;padding:12px 14px}
+.post-top .story{width:42px;height:42px;padding:2px}
+.post-top .story img{border-width:2px}
+.post-top p{line-height:1.25;font-size:14px}
+.post-top small{display:block;color:var(--muted);font-size:12.5px}
+.post-top .dots{margin-left:auto;color:var(--ink)}
+.media{background:radial-gradient(90% 70% at 50% 40%,#FFFFFF 0%,#EEEEEE 100%);display:grid;justify-items:center;padding:18px 0 0}
+.media .m3{width:min(330px,86%)}
+.acts{display:flex;align-items:center;gap:16px;padding:12px 14px 4px}
+.acts .ico{width:26px;height:26px}
+.acts .save{margin-left:auto}
+.acts .heart{transition:fill .3s,stroke .3s}
+.post.liked .heart{fill:#C9A45C;stroke:#C9A45C}
+.post-cap{padding:4px 14px 16px;font-size:14px}
+.post-cap .muted{color:var(--muted)}
+.cap-col h1{font-size:clamp(44px,6.4vw,84px)}
+.cap-col .who{display:flex;align-items:center;gap:10px;font-size:15px;margin-bottom:18px}
+.cap-col .who .flag{font-size:16px}
+.lead{font-size:clamp(17px,1.5vw,20px);color:var(--muted);max-width:42ch;margin-top:20px}
+.try{margin-top:30px;max-width:480px}
+.try label{display:block;font-size:15px;font-weight:600;margin-bottom:10px}
+.try .hint{font-size:14px;color:var(--muted);margin-top:8px}
+@media (max-width:860px){.hero .wrap{grid-template-columns:minmax(0,1fr)}.cap-col{order:-1}.post{max-width:470px;margin-inline:auto;width:100%}}
+
+/* grid of real installations */
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
+.grid3 figure{position:relative;margin:0;overflow:hidden}
+.grid3 img{width:100%;aspect-ratio:4/5;object-fit:cover}
+.grid3 figcaption{position:absolute;left:0;right:0;bottom:0;padding:40px 16px 14px;background:linear-gradient(transparent,rgba(0,0,0,.6));color:#fff;font-size:14px;display:flex;align-items:center;gap:10px}
+.grid3 figcaption img{width:32px;height:32px;aspect-ratio:1;border-radius:50%;border:2px solid #fff;background:#fff}
+.grid3 figcaption b{display:block;font-weight:700}
+@media (max-width:700px){.grid3{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:80%;overflow-x:auto;scroll-snap-type:x mandatory}.grid3 figure{scroll-snap-align:start}}
+
+/* how it works: a carousel post, one slide per step */
+.carousel-sec{background:var(--soft);border-block:1px solid var(--line)}
+.carousel-sec .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,470px);gap:clamp(28px,6vw,88px);align-items:center}
+.slides{display:grid;grid-auto-flow:column;grid-auto-columns:100%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.slides::-webkit-scrollbar{display:none}
+.slide{scroll-snap-align:start;aspect-ratio:4/5;padding:36px 32px;display:grid;align-content:space-between;background:#fff}
+.slide:nth-child(2){background:#F6F1E7}.slide:nth-child(3){background:#262626;color:#fff}.slide:nth-child(4){background:#EFE6D4}
+.slide .k{font-weight:700;font-size:15px;color:var(--acc-text)}
+.slide:nth-child(3) .k{color:#E9B867}
+.slide h3{font-size:clamp(30px,3.6vw,42px);font-weight:800;letter-spacing:-.03em;line-height:1.05}
+.slide p{font-size:17px;max-width:30ch;margin-top:14px;opacity:.85}
+.dots-row{display:flex;justify-content:center;gap:6px;padding:12px}
+.dots-row span{width:6px;height:6px;border-radius:50%;background:#C7C7C7}
+.dots-row span.on{background:var(--acc)}
+@media (max-width:860px){.carousel-sec .wrap{grid-template-columns:minmax(0,1fr)}.carousel-sec .post{max-width:470px;margin-inline:auto;width:100%}}
+
+/* product: "about this account" style rows */
+.about{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(28px,6vw,80px);align-items:center}
+.about>img{border-radius:var(--r);border:1px solid var(--line)}
+.rows{list-style:none;margin:24px 0 0;padding:0;border:1px solid var(--line);border-radius:var(--r)}
+.rows li{display:flex;gap:14px;align-items:center;padding:14px 18px;border-top:1px solid var(--line)}
+.rows li:first-child{border-top:0}
+.rows .ico{color:var(--ink)}
+.rows b{display:block;font-weight:600}
+.rows span{color:var(--muted);font-size:15px}
+@media (max-width:860px){.about{grid-template-columns:minmax(0,1fr)}.about>img{max-width:440px}}
+
+/* configurator */
+#creer{background:var(--soft);border-top:1px solid var(--line)}
+.stage{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.stage .top{display:flex;align-items:center;gap:10px;width:100%;font-size:14px}
+.stage .top .story{width:34px;height:34px;padding:2px}
+@media (max-width:980px){.stage{border-radius:0;border-inline:0}.stage .top{display:none}}
+
+/* instagram profile */
+.ig{display:block;text-decoration:none;max-width:935px;margin-inline:auto}
+.ig-head{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(20px,6vw,80px);align-items:center;padding-bottom:28px;border-bottom:1px solid var(--line);margin-bottom:4px}
+.ig-head .story{width:clamp(86px,14vw,150px);height:auto;aspect-ratio:1}
+.ig-head .story img{background:#000}
+.ig-l1{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.ig-user{font-size:22px;font-weight:500}
+.ig-bio{margin-top:12px;font-size:15px}
+.ig-bio b{display:flex;align-items:center;gap:8px}
+.ig-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
+.ig-grid img{width:100%;aspect-ratio:4/5;object-fit:cover}
+@media (max-width:640px){.ig-grid img:nth-child(n+10){display:none}}
+
+/* faq as a comment thread */
+.faq{max-width:760px;margin-inline:auto}
+.faq summary{gap:14px;justify-content:flex-start}
+.faq summary::before{content:"";width:32px;height:32px;border-radius:50%;flex:none;background:#EFEFEF url(img/logo-square.png) center/cover;border:1px solid var(--line)}
+.faq summary::after{margin-left:auto}
+.faq details p{padding-left:46px}
+
+/* final: a direct message */
+.dm{max-width:760px;margin-inline:auto;border:1px solid var(--line);border-radius:var(--r);padding:clamp(24px,4vw,40px);display:grid;gap:18px}
+.bubble{justify-self:start;background:#EFEFEF;border-radius:22px;padding:12px 18px;max-width:46ch}
+.bubble.me{justify-self:end;background:var(--acc);color:var(--acc-ink)}
+.dm .ctas{display:flex;flex-wrap:wrap;gap:12px;justify-content:flex-end}
+
 </style>
 </head>
 <body>
 <header id="hdr">
   <div class="wrap nav">
-    <a class="logo" href="#top"><img src="img/logo-square.png" alt="">Instamirror</a>
+    <a class="logo" href="#top"><img src="img/logo-square.png" alt="">instamirror</a>
     <ul>
       <li><a href="#clients">Réalisations</a></li>
       <li><a href="#etapes">Comment ça marche</a></li>
       <li><a href="#miroir">Le miroir</a></li>
       <li><a href="#faq">Questions</a></li>
     </ul>
-    <a class="btn btn-or" href="#creer">Créer mon miroir</a>
+    <a class="btn btn-acc" href="#creer">Créer mon miroir</a>
   </div>
 </header>
 
 <main id="top">
+  <div class="stories" aria-label="Nos clients">
+    <ul class="wrap"><li><span class="story"><img src="img/logo-jungle.png" alt=""></span>The Jungle</li><li><span class="story"><img src="img/logo-chezpichi.png" alt=""></span>Chez Pichi</li><li><span class="story"><img src="img/logo-mrchour.png" alt=""></span>Mr Chour</li><li><span class="story"><img src="img/logo-mrchour-elite.png" alt=""></span>Mr Chour Elite</li><li><a class="story add" href="#creer" aria-label="Créer votre miroir">+</a>Le vôtre</li></ul>
+  </div>
+
   <section class="hero">
     <div class="wrap">
-      <div class="hero-left">
-      <div class="hero-txt">
-        <p class="made"><span class="flag" aria-hidden="true"></span>Made in Côte d'Ivoire</p>
-        <h1>Le miroir qui rend votre lieu <em>viral</em>.</h1>
+      <article class="post" id="hero-post">
+        <div class="post-top"><span class="story"><img src="img/logo-square.png" alt=""></span><p><span class="handle">instamirror.ci</span><small>Abidjan, Côte d'Ivoire</small></p><svg class="ico dots" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg></div>
+        <div class="media"><div class="m3 white" id="hero-m3" role="img" aria-label="Aperçu 3D d'un miroir Instamirror à votre nom"></div></div>
+        <div class="acts"><svg class="ico heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7Z"/></svg><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg><svg class="ico save" viewBox="0 0 24 24" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg></div>
+        <p class="post-cap"><span class="handle">instamirror.ci</span> Rendu 3D, version blanche, 120 × 63 cm. <span class="muted">Tapez votre nom à droite, il s'écrit sur le miroir.</span></p>
+      </article>
+      <div class="cap-col">
+        <p class="who"><span class="flag" aria-hidden="true"></span>Made in Côte d'Ivoire</p>
+        <h1>Le miroir qui rend votre lieu viral.</h1>
         <p class="lead">Un miroir lumineux de 120 cm habillé comme un post Instagram, à votre nom. Vos clients se prennent en photo devant, la publient et vous identifient.</p>
-      </div>
-      <form class="try hero-try" id="try" action="#creer">
+        <form class="try" id="try" action="#creer">
         <label for="try-user">Essayez avec le nom Instagram de votre lieu</label>
         <div class="box">
           <span class="at" aria-hidden="true">@</span>
           <input id="try-user" autocomplete="off" autocapitalize="none" spellcheck="false" maxlength="30" placeholder="votre.nom.insta">
-          <button class="btn btn-or" type="submit">Personnaliser</button>
+          <button class="btn btn-acc" type="submit">Personnaliser</button>
         </div>
-        <p class="hint">Le nom s'écrit sur le miroir pendant que vous tapez.</p>
       </form>
-      <div class="hero-trust">
-        <span class="avatars" aria-hidden="true">
-          <img src="img/logo-jungle.png" alt=""><img src="img/logo-chezpichi.png" alt=""><img src="img/logo-mrchour.png" alt=""><img src="img/logo-mrchour-elite.png" alt="">
-        </span>
-        <span>Déjà chez <b>The Jungle</b>, <b>Chez Pichi</b>, <b>Mr Chour</b> et <b>Mr Chour Elite</b></span>
-      </div>
-      </div>
-      <div class="hero-mir studio">
-        <div class="m3 white" id="hero-m3" role="img" aria-label="Aperçu 3D d'un miroir Instamirror à votre nom"></div>
-        <p class="cap">Rendu 3D, version blanche, 120 × 63 cm</p>
       </div>
     </div>
   </section>
 
-  <section id="clients">
+  <section id="clients" style="padding-top:0">
     <div class="wrap">
-      <div class="intro reveal">
-        <p class="eyebrow">Réalisations</p>
-        <h2>Déjà en place à Abidjan</h2>
-        <p>Restaurants, bars et pâtisseries où les clients s'arrêtent pour la photo avant de passer à table.</p>
-      </div>
-      <div class="wall reveal">
-        <figure><img src="img/jungle-selfie.jpg" alt="Une cliente se prend en photo dans le miroir noir Instamirror de The Jungle" loading="lazy" width="825" height="1100"><figcaption><img src="img/logo-jungle.png" alt="" loading="lazy"><span><b>The Jungle</b>Version noire</span></figcaption></figure>
-        <figure><img src="img/chezpichi.jpg" alt="Une cliente se prend en photo dans le miroir blanc Instamirror de Chez Pichi" loading="lazy" width="825" height="1100"><figcaption><img src="img/logo-chezpichi.png" alt="" loading="lazy"><span><b>Chez Pichi</b>Version blanche</span></figcaption></figure>
-        <figure><img src="img/mrchour.jpg" alt="Miroir lumineux Instamirror de Mr Chour avec sa carte QR" loading="lazy" width="1100" height="830"><figcaption><img src="img/logo-mrchour.png" alt="" loading="lazy"><span><b>Mr Chour</b>Avec LED</span></figcaption></figure>
+      <div class="sec-head"><h2>Déjà en place à Abidjan</h2><p>Des restaurants et des bars où les clients s'arrêtent pour la photo avant de passer à table.</p></div>
+      <div class="grid3">
+        <figure><img src="img/jungle-selfie.jpg" alt="Une cliente se prend en photo dans le miroir noir de The Jungle" loading="lazy" width="825" height="1100"><figcaption><img src="img/logo-jungle.png" alt=""><span><b>The Jungle</b>Version noire</span></figcaption></figure>
+        <figure><img src="img/chezpichi.jpg" alt="Une cliente se prend en photo dans le miroir blanc de Chez Pichi" loading="lazy" width="825" height="1100"><figcaption><img src="img/logo-chezpichi.png" alt=""><span><b>Chez Pichi</b>Version blanche</span></figcaption></figure>
+        <figure><img src="img/mrchour.jpg" alt="Miroir lumineux Instamirror de Mr Chour" loading="lazy" width="1100" height="830"><figcaption><img src="img/logo-mrchour.png" alt=""><span><b>Mr Chour</b>Avec LED</span></figcaption></figure>
       </div>
     </div>
   </section>
 
-  <section id="avantages">
+  <section class="carousel-sec" id="etapes">
     <div class="wrap">
-      <div class="intro reveal">
-        <p class="eyebrow">Pourquoi un Instamirror</p>
-        <h2>Chaque selfie devient une publicité pour vous</h2>
-      </div>
-      <ul class="feats reveal">
-        <li><span class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></span><h3>Vos clients posent</h3><p>Le miroir attire l'œil : on s'arrête, on sort son téléphone, on se prend en photo.</p></li>
-        <li><span class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg></span><h3>Ils vous identifient</h3><p>Votre nom et votre logo sont sur chaque photo publiée en story ou en post.</p></li>
-        <li><span class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></span><h3>Visible de jour comme de nuit</h3><p>Le contour LED blanc chaud met le miroir en valeur, même dans une salle tamisée.</p></li>
-        <li><span class="ic"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg></span><h3>Rien à percer</h3><p>Livré monté sur son chevalet en bois : il suffit de le poser et de le brancher.</p></li>
-      </ul>
-    </div>
-  </section>
-
-  <section id="etapes" style="padding-top:0">
-    <div class="wrap">
-      <div class="intro reveal">
-        <p class="eyebrow">Comment ça marche</p>
-        <h2>De votre idée au miroir installé</h2>
-        <p>Vous n'avez rien à dessiner. Vous remplissez, on prépare, vous validez.</p>
-      </div>
-      <ol class="steps reveal">
-        <li><h3>Vous personnalisez</h3><p>Logo, nom, compteurs, légende, hashtags. Version blanche ou noire, avec ou sans LED.</p></li>
-        <li><h3>Vous validez la maquette</h3><p>On vous envoie le visuel exact sur WhatsApp. On ajuste jusqu'à ce qu'il vous plaise.</p></li>
-        <li><h3>On fabrique</h3><p>5 jours ouvrés après votre validation, dans notre atelier en Côte d'Ivoire.</p></li>
-        <li><h3>On livre à Abidjan</h3><p>Le miroir arrive monté sur son chevalet. Il ne reste qu'à le brancher.</p></li>
-      </ol>
-    </div>
-  </section>
-
-  <section class="ci" aria-label="Fabriqué en Côte d'Ivoire">
-    <div class="wrap">
-      <span class="flag" aria-hidden="true"></span>
-      <div>
-        <h2>Fabriqué en Côte d'Ivoire</h2>
-        <p>Chaque miroir est conçu et fabriqué ici, puis livré monté sur son chevalet à Abidjan, 5 jours ouvrés après votre validation.</p>
-      </div>
+      <div class="sec-head" style="margin:0"><h2>De votre idée au miroir installé, en 4 étapes</h2><p>Vous n'avez rien à dessiner. Faites défiler le post : vous remplissez, on prépare, vous validez, on livre.</p></div>
+      <article class="post">
+        <div class="post-top"><span class="story"><img src="img/logo-square.png" alt=""></span><p><span class="handle">instamirror.ci</span><small>Comment ça marche</small></p><svg class="ico dots" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg></div>
+        <div class="slides" id="slides" tabindex="0" aria-label="Les 4 étapes, faites défiler">
+          <div class="slide"><span class="k">1 / 4</span><div><h3>Vous personnalisez</h3><p>Logo, nom, compteurs, légende, hashtags. Version blanche ou noire, avec ou sans LED.</p></div></div>
+          <div class="slide"><span class="k">2 / 4</span><div><h3>Vous validez la maquette</h3><p>On vous envoie le visuel exact sur WhatsApp et on ajuste jusqu'à ce qu'il vous plaise.</p></div></div>
+          <div class="slide"><span class="k">3 / 4</span><div><h3>On fabrique en 5 jours ouvrés</h3><p>Dans notre atelier en Côte d'Ivoire, à partir de votre validation.</p></div></div>
+          <div class="slide"><span class="k">4 / 4</span><div><h3>On livre à Abidjan</h3><p>Le miroir arrive monté sur son chevalet en bois. Il ne reste qu'à le brancher.</p></div></div>
+        </div>
+        <div class="dots-row" id="dots" aria-hidden="true"><span class="on"></span><span></span><span></span><span></span></div>
+      </article>
     </div>
   </section>
 
   <section id="miroir">
-    <div class="wrap product">
-      <img class="reveal" src="img/specs-atelier.jpg" alt="Miroir Instamirror sur chevalet, avec ses dimensions et ses zones personnalisables" loading="lazy" width="825" height="1100">
-      <div class="txt reveal">
-        <p class="eyebrow">Le miroir</p>
+    <div class="wrap about">
+      <img src="img/specs-atelier.jpg" alt="Miroir Instamirror sur chevalet, avec ses dimensions et ses zones personnalisables" loading="lazy" width="825" height="1100">
+      <div>
         <h2>Un vrai post Instagram, en grand</h2>
-        <p>Chaque élément reprend votre identité : photo de profil, nom, compteurs, légende, hashtags, et votre logo dans la barre du bas.</p>
-        <dl class="specs">
-          <dt>Dimensions</dt><dd>120 × 63 cm</dd>
-          <dt>Éclairage</dt><dd>Contour LED blanc chaud, en option</dd>
-          <dt>Support</dt><dd>Chevalet en bois inclus</dd>
-          <dt>Versions</dt><dd>Blanche ou noire</dd>
-          <dt>Personnalisation</dt><dd>Logo, nom, heure, compteurs, légende, hashtags</dd>
-          <dt>Fabrication</dt><dd>5 jours ouvrés après validation de la maquette</dd>
-          <dt>Origine</dt><dd>Fabriqué en Côte d'Ivoire <span class="flag" aria-hidden="true"></span></dd>
-        </dl>
+        <p class="lead">Chaque élément reprend votre identité : photo de profil, nom, compteurs, légende, hashtags, et votre logo dans la barre du bas.</p>
+        <ul class="rows">
+          <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="1"/></svg><div><b>120 × 63 cm</b><span>Le format du miroir</span></div></li>
+          <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg><div><b>Contour LED blanc chaud</b><span>En option, se branche sur une prise standard</span></div></li>
+          <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 22 12 3l4 19"/><path d="M6 16h12"/></svg><div><b>Chevalet en bois inclus</b><span>Rien à percer, il suffit de le poser</span></div></li>
+          <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 0 0 20z" fill="currentColor"/></svg><div><b>Version blanche ou noire</b><span>Avec tous vos textes et votre logo</span></div></li>
+          <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><div><b>5 jours ouvrés</b><span>De fabrication après validation de la maquette</span></div></li>
+          <li><span class="flag" aria-hidden="true" style="font-size:18px"></span><div><b>Fabriqué en Côte d'Ivoire</b><span>Livré à Abidjan</span></div></li>
+        </ul>
       </div>
     </div>
   </section>
 
   <section id="creer">
     <div class="wrap">
-      <div class="intro">
-        <p class="eyebrow">Configurateur</p>
-        <h2>Créez votre miroir</h2>
-        <p>Chaque champ modifie le miroir en direct. Envoyez votre demande : on vous renvoie la maquette finale à valider avant fabrication.</p>
-      </div>
-
+      <div class="sec-head"><h2>Créez votre miroir</h2><p>Chaque champ modifie le miroir en direct. Envoyez votre demande : on vous renvoie la maquette finale à valider avant fabrication.</p></div>
       <div class="config">
         <form id="cfg" name="commande-miroir" method="POST" action="/merci" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" novalidate>
           <input type="hidden" name="form-name" value="commande-miroir">
@@ -511,8 +445,8 @@ Adresse.
             <div class="msg" id="msg" role="status" hidden></div>
           </div>
         </form>
-
         <div class="stage" id="stage">
+          <div class="top"><span class="story"><img src="img/logo-square.png" alt=""></span><span class="handle">Votre miroir</span></div>
           <div class="m3 white" id="cfg-m3" role="img" aria-label="Aperçu 3D de votre miroir personnalisé"></div>
           <p class="cap">Rendu 3D à l'échelle, 120 × 63 cm</p>
         </div>
@@ -520,22 +454,15 @@ Adresse.
     </div>
   </section>
 
-  <section id="instagram" style="padding-top:0">
+  <section id="instagram">
     <div class="wrap">
-      <div class="intro center reveal">
-        <p class="eyebrow">Instagram</p>
-        <h2>Suivez-nous sur Instagram</h2>
-        <p>Nos dernières installations, les selfies de vos clients et les nouveautés.</p>
-      </div>
-      <a class="ig reveal" href="https://www.instagram.com/instamirror.ci/" target="_blank" rel="noopener" aria-label="Voir le compte Instagram @instamirror.ci">
+      <a class="ig" href="https://www.instagram.com/instamirror.ci/" target="_blank" rel="noopener" aria-label="Voir le compte Instagram @instamirror.ci">
         <div class="ig-head">
-          <span class="ig-ring"><img src="img/logo-square.png" alt=""></span>
+          <span class="story"><img src="img/logo-square.png" alt=""></span>
           <div>
-            <p class="ig-user">instamirror.ci</p>
-            <p class="ig-name">Instamirror CI <span class="flag" aria-hidden="true"></span></p>
-            <p class="ig-bio">Le miroir qui vous fait de la pub<br>Made in Côte d'Ivoire<br>Créez le vôtre</p>
+            <div class="ig-l1"><span class="ig-user">instamirror.ci</span><span class="btn btn-acc" style="min-height:36px;padding:6px 18px">Suivre</span></div>
+            <div class="ig-bio"><b>Instamirror CI <span class="flag" aria-hidden="true"></span></b>Le miroir qui vous fait de la pub<br>Made in Côte d'Ivoire<br>Créez le vôtre</div>
           </div>
-          <span class="btn btn-or">Suivre</span>
         </div>
         <div class="ig-grid">
           <img src="img/ig/post-01.jpg" alt="Deux amies dans un miroir Instamirror en extérieur" loading="lazy" width="600" height="750">
@@ -556,14 +483,9 @@ Adresse.
   </section>
 
   <section id="faq" style="padding-top:0">
-    <div class="wrap faq">
-      <div class="intro">
-        <p class="eyebrow">Questions</p>
-        <h2>Vos questions sur le miroir Instagram</h2>
-        <p>Une autre question ? Écrivez-nous sur <a href="https://wa.me/message/THBIEJRZPCD7P1" target="_blank" rel="noopener">WhatsApp</a>.</p>
-      </div>
-      <div>
-        <details open><summary>Qu'est-ce qu'un miroir Instamirror ?</summary><p>C'est un miroir de 120 × 63 cm habillé comme un post Instagram : photo de profil, nom du compte, compteurs de likes, légende et icônes. Vos clients se placent devant, se prennent en photo et obtiennent une image prête à publier, avec votre nom et votre logo bien visibles.</p></details>
+    <div class="wrap">
+      <div class="sec-head" style="margin-inline:auto;text-align:center;justify-items:center"><h2>Vos questions</h2><p>Une autre question ? Écrivez-nous sur <a href="https://wa.me/message/THBIEJRZPCD7P1" target="_blank" rel="noopener">WhatsApp</a>.</p></div>
+      <div class="faq"><details open><summary>Qu'est-ce qu'un miroir Instamirror ?</summary><p>C'est un miroir de 120 × 63 cm habillé comme un post Instagram : photo de profil, nom du compte, compteurs de likes, légende et icônes. Vos clients se placent devant, se prennent en photo et obtiennent une image prête à publier, avec votre nom et votre logo bien visibles.</p></details>
         <details><summary>Pourquoi installer un miroir Instagram dans mon établissement ?</summary><p>Chaque photo prise devant le miroir montre votre logo et votre nom de compte. Vos clients la publient en story ou en post et vous identifient : c'est de la publicité gratuite auprès de leurs abonnés, et un moyen simple de gagner des abonnés et de la visibilité à Abidjan.</p></details>
         <details><summary>Pour quels établissements ?</summary><p>Restaurants, bars, clubs, lounges, hôtels, pâtisseries, boutiques, salons de coiffure et de beauté, salles de sport, et aussi les événements : mariages, anniversaires, lancements de produits, salons professionnels.</p></details>
         <details><summary>Est-ce que je dois fournir un design ?</summary><p>Non. Remplissez le configurateur avec votre logo et vos infos. Notre équipe prépare la maquette finale et vous l'envoie pour validation. Rien n'est fabriqué tant que vous n'avez pas validé.</p></details>
@@ -573,39 +495,39 @@ Adresse.
         <details><summary>Faut-il une prise électrique ?</summary><p>Pour la version avec LED, oui : le contour lumineux se branche sur une prise standard. Prévoyez un emplacement près d'une prise, idéalement à l'entrée, près du bar ou dans un endroit bien éclairé.</p></details>
         <details><summary>Livrez-vous à Abidjan ?</summary><p>Oui, nous livrons à Abidjan. Pour une autre ville de Côte d'Ivoire, écrivez-nous sur WhatsApp et nous vous indiquerons les conditions.</p></details>
         <details><summary>Comment entretenir le miroir ?</summary><p>Un chiffon doux et sec, ou légèrement humide, suffit. Évitez les produits abrasifs sur les parties imprimées.</p></details>
-        <details><summary>Comment commander ?</summary><p>Personnalisez votre miroir dans le configurateur et envoyez votre demande, ou écrivez-nous directement sur WhatsApp au +225 07 87 14 87 53.</p></details>
-      </div>
+        <details><summary>Comment commander ?</summary><p>Personnalisez votre miroir dans le configurateur et envoyez votre demande, ou écrivez-nous directement sur WhatsApp au +225 07 87 14 87 53.</p></details></div>
     </div>
   </section>
 
-  <section class="final" style="padding-top:0">
-    <div class="wrap reveal">
-      <div>
-        <h2>Votre lieu mérite d'être partagé</h2>
-        <p>Une question avant de commander ? On vous répond sur WhatsApp, avec une maquette à votre nom si vous le souhaitez.</p>
-        <a class="num" href="https://wa.me/message/THBIEJRZPCD7P1" target="_blank" rel="noopener">+225 07 87 14 87 53</a>
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="dm">
+        <p class="bubble">Bonjour, je voudrais un miroir pour mon restaurant.</p>
+        <p class="bubble me">Avec plaisir. Envoyez-nous votre logo, on vous prépare une maquette à votre nom.</p>
         <div class="ctas">
-          <a class="btn btn-wa" href="https://wa.me/message/THBIEJRZPCD7P1" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.8-1.4a.5.5 0 0 0 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.7 11.7 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.4-.3Z"/></svg>Écrire sur WhatsApp</a>
-          <a class="btn" href="https://www.instagram.com/instamirror.ci/" target="_blank" rel="noopener"><img class="ig-mini" src="img/logo-square.png" alt="">Voir @instamirror.ci</a>
+          <a class="btn" href="https://www.instagram.com/instamirror.ci/" target="_blank" rel="noopener">Voir @instamirror.ci</a>
+          <a class="btn btn-wa" href="https://wa.me/message/THBIEJRZPCD7P1" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.8-1.4a.5.5 0 0 0 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.7 11.7 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.4-.3Z"/></svg>Écrire au +225 07 87 14 87 53</a>
         </div>
       </div>
-      <img class="ph" src="img/chezpichi-2.jpg" alt="Miroir blanc Instamirror sur chevalet chez Chez Pichi" loading="lazy" width="825" height="1100">
     </div>
   </section>
 </main>
-
+<script>
+// Carousel dots + the heart fills once, when the LED lights.
+(function(){var s=document.getElementById("slides"),d=document.querySelectorAll("#dots span");
+s.addEventListener("scroll",function(){var i=Math.round(s.scrollLeft/s.clientWidth);d.forEach(function(x,j){x.classList.toggle("on",i===j)})},{passive:true});
+setTimeout(function(){document.getElementById("hero-post").classList.add("liked")},900);})();
+</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Qu'est-ce qu'un miroir Instamirror ?", "acceptedAnswer": {"@type": "Answer", "text": "C'est un miroir de 120 × 63 cm habillé comme un post Instagram : photo de profil, nom du compte, compteurs de likes, légende et icônes. Vos clients se placent devant, se prennent en photo et obtiennent une image prête à publier, avec votre nom et votre logo bien visibles."}}, {"@type": "Question", "name": "Pourquoi installer un miroir Instagram dans mon établissement ?", "acceptedAnswer": {"@type": "Answer", "text": "Chaque photo prise devant le miroir montre votre logo et votre nom de compte. Vos clients la publient en story ou en post et vous identifient : c'est de la publicité gratuite auprès de leurs abonnés, et un moyen simple de gagner des abonnés et de la visibilité à Abidjan."}}, {"@type": "Question", "name": "Pour quels établissements ?", "acceptedAnswer": {"@type": "Answer", "text": "Restaurants, bars, clubs, lounges, hôtels, pâtisseries, boutiques, salons de coiffure et de beauté, salles de sport, et aussi les événements : mariages, anniversaires, lancements de produits, salons professionnels."}}, {"@type": "Question", "name": "Est-ce que je dois fournir un design ?", "acceptedAnswer": {"@type": "Answer", "text": "Non. Remplissez le configurateur avec votre logo et vos infos. Notre équipe prépare la maquette finale et vous l'envoie pour validation. Rien n'est fabriqué tant que vous n'avez pas validé."}}, {"@type": "Question", "name": "Qu'est-ce que je peux personnaliser ?", "acceptedAnswer": {"@type": "Answer", "text": "Tout : la version (blanche ou noire), le contour LED, le logo, le nom d'utilisateur, le sous-titre, l'heure, les quatre compteurs (j'aime, commentaires, republications, partages), la légende, les hashtags et la date du post."}}, {"@type": "Question", "name": "Quelles sont les dimensions du miroir ?", "acceptedAnswer": {"@type": "Answer", "text": "Le miroir mesure 120 cm de haut et 63 cm de large. Il est livré avec un chevalet en bois qui permet de l'installer partout, sans percer de mur."}}, {"@type": "Question", "name": "Quel est le délai de fabrication ?", "acceptedAnswer": {"@type": "Answer", "text": "5 jours ouvrés à partir de la validation de votre maquette. Le miroir est fabriqué en Côte d'Ivoire."}}, {"@type": "Question", "name": "Faut-il une prise électrique ?", "acceptedAnswer": {"@type": "Answer", "text": "Pour la version avec LED, oui : le contour lumineux se branche sur une prise standard. Prévoyez un emplacement près d'une prise, idéalement à l'entrée, près du bar ou dans un endroit bien éclairé."}}, {"@type": "Question", "name": "Livrez-vous à Abidjan ?", "acceptedAnswer": {"@type": "Answer", "text": "Oui, nous livrons à Abidjan. Pour une autre ville de Côte d'Ivoire, écrivez-nous sur WhatsApp et nous vous indiquerons les conditions."}}, {"@type": "Question", "name": "Comment entretenir le miroir ?", "acceptedAnswer": {"@type": "Answer", "text": "Un chiffon doux et sec, ou légèrement humide, suffit. Évitez les produits abrasifs sur les parties imprimées."}}, {"@type": "Question", "name": "Comment commander ?", "acceptedAnswer": {"@type": "Answer", "text": "Personnalisez votre miroir dans le configurateur et envoyez votre demande, ou écrivez-nous directement sur WhatsApp au +225 07 87 14 87 53."}}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "LocalBusiness", "name": "Instamirror", "description": "Miroirs lumineux personnalisés au format post Instagram pour restaurants, bars, hôtels et boutiques. Fabriqués en Côte d'Ivoire.", "telephone": "+2250787148753", "address": {"@type": "PostalAddress", "addressLocality": "Abidjan", "addressCountry": "CI"}, "sameAs": ["https://www.instagram.com/instamirror.ci/"]}</script>
 
 <footer>
   <div class="wrap"><span>© 2026 Instamirror, Abidjan</span><span>Fabriqué en Côte d'Ivoire <span class="flag" aria-hidden="true"></span></span><a href="https://www.instagram.com/instamirror.ci/" target="_blank" rel="noopener">@instamirror.ci</a></div>
 </footer>
-
 <nav class="bar" id="bar" aria-label="Actions rapides">
   <a class="btn btn-wa" href="https://wa.me/message/THBIEJRZPCD7P1" target="_blank" rel="noopener" aria-label="Écrire sur WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.8-1.4a.5.5 0 0 0 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.7 11.7 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.4-.3Z"/></svg></a>
-  <a class="btn btn-or" href="#creer">Créer mon miroir</a>
+  <a class="btn btn-acc" href="#creer">Créer mon miroir</a>
 </nav>
-
 <script>
 (function(){
   var $=function(id){return document.getElementById(id)};
