@@ -1,0 +1,739 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Instamirror, le post</title>
+<meta name="description" content="Instamirror : miroir Instagram personnalisé et lumineux pour restaurants, bars, hôtels et boutiques à Abidjan. Fabriqué en Côte d'Ivoire en 5 jours ouvrés.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="img/logo-square.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800;900&family=Roboto:wght@400;700&family=Montserrat:wght@700&display=swap">
+<link rel="preload" as="image" href="img/miroir-3d-blanc.webp" type="image/webp">
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto;display:block}
+[hidden]{display:none!important}
+a{color:inherit}
+p{margin:0}
+h1,h2,h3{margin:0;text-wrap:balance}
+.wrap{max-width:1200px;margin:0 auto;padding-inline:max(20px,env(safe-area-inset-left))}
+:focus-visible{outline:2px solid var(--acc-text);outline-offset:3px;border-radius:4px}
+.flag{display:inline-block;width:1.5em;height:1em;flex:none;border-radius:2px;background:linear-gradient(90deg,#F77F00 0 33.34%,#FFFFFF 0 66.67%,#009E60 0);box-shadow:0 0 0 1px rgba(0,0,0,.14);vertical-align:-.14em}
+.ico{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:12px 24px;border-radius:var(--r-btn);font:inherit;font-weight:600;font-size:16px;line-height:1.2;text-decoration:none;border:1.5px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;transition:background-color .2s,border-color .2s,color .2s}
+.btn:hover{background:var(--ink);color:var(--bg)}
+.btn-acc{background:var(--acc);border-color:var(--acc);color:var(--acc-ink)}
+.btn-acc:hover{background:var(--acc-hover);border-color:var(--acc-hover);color:var(--acc-ink)}
+.btn-wa{background:#1C8C4E;border-color:#1C8C4E;color:#fff}
+.btn-wa:hover{background:#17773F;border-color:#17773F;color:#fff}
+.btn svg{width:20px;height:20px;flex:none}
+.btn[disabled]{opacity:.6;cursor:progress}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+
+/* live 3D mirror (plate + print + LED halo), driven by the shared script */
+.m3{position:relative;width:min(420px,100%);aspect-ratio:760/1480}
+.m3>*{position:absolute;inset:0;width:100%;height:100%}
+.m3 .halo{opacity:0;transition:opacity 1.2s ease;overflow:visible}
+.m3.lit .halo{opacity:1}
+.m3.white .print{mix-blend-mode:multiply}
+
+/* header + mobile bar (the script needs #hdr and #bar) */
+header{position:sticky;top:0;z-index:30;padding-top:env(safe-area-inset-top);transition:border-color .2s,box-shadow .2s}
+.nav{display:flex;align-items:center;gap:24px;min-height:64px}
+.nav ul{display:flex;gap:26px;list-style:none;margin:0 0 0 auto;padding:0;font-size:15px;font-weight:500}
+.nav ul a{text-decoration:none;color:var(--muted)}
+.nav ul a:hover{color:var(--ink)}
+.nav .btn{min-height:42px;padding:8px 18px;font-size:15px}
+@media (max-width:920px){.nav ul{display:none}.nav .btn{margin-left:auto}}
+.bar{display:none}
+@media (max-width:760px){
+  body{padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+  .bar{display:flex;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:40;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:var(--bar-bg);backdrop-filter:blur(12px);border-top:1px solid var(--line);transition:transform .25s}
+  .bar.hide{transform:translateY(110%)}
+  .bar .btn{flex:1;min-height:50px;padding-inline:14px}
+  .bar .btn-wa{flex:0 0 auto;width:54px;padding:0}
+}
+
+/* try box */
+.try .box{display:flex;align-items:center;gap:4px;background:var(--field);border:1.5px solid var(--line);padding:5px 5px 5px 18px;border-radius:var(--r-btn)}
+.try .box:focus-within{border-color:var(--acc-text)}
+.try .at{font:700 18px Roboto,Arial,sans-serif}
+.try input{flex:1;min-width:0;border:0;background:transparent;font:700 18px/1.2 Roboto,Arial,sans-serif;color:var(--ink);padding:12px 4px;outline:none}
+.try input::placeholder{color:var(--muted);font-weight:400;opacity:.8}
+.try .btn{min-height:46px;padding:8px 20px}
+
+/* configurator form */
+form#cfg{display:grid;gap:18px}
+fieldset{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);padding:24px;margin:0;display:grid;gap:18px;min-width:0}
+legend{float:left;width:100%;padding:0;font-family:var(--display);font-size:22px;font-weight:600;display:flex;align-items:center;gap:12px;line-height:1.2}
+legend .n{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--chip);font-family:var(--sans);font-size:14px;font-weight:600;color:var(--acc-text)}
+legend+*{clear:both}
+.field{display:grid;gap:7px;min-width:0}
+.field label,.lbl{font-size:15px;font-weight:500}
+.opt{color:var(--muted);font-weight:400}
+.help{font-size:14px;color:var(--muted)}
+#cfg input,#cfg textarea{font:inherit;font-size:16px;color:var(--ink);background:var(--field);border:1.5px solid var(--line);border-radius:var(--r-sm);padding:12px 14px;min-height:48px;width:100%;transition:border-color .2s,box-shadow .2s}
+#cfg textarea{min-height:128px;resize:vertical;line-height:1.5}
+#cfg input:focus,#cfg textarea:focus{outline:none;border-color:var(--acc-text);box-shadow:0 0 0 3px var(--ring)}
+.bad input{border-color:#B3261E!important}
+.bad .err{display:block}
+.err{display:none;color:#B3261E;font-size:14px}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.row4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media (max-width:560px){.row{grid-template-columns:minmax(0,1fr)}.row4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:5px;background:var(--chip);border-radius:calc(var(--r-sm) + 4px)}
+.seg label{position:relative;display:flex;align-items:center;justify-content:center;gap:10px;min-height:46px;border-radius:var(--r-sm);font-weight:500;cursor:pointer}
+#cfg .seg input{position:absolute;opacity:0;width:1px;height:1px;min-height:0}
+.seg label:has(input:checked){background:var(--surface);box-shadow:0 1px 3px rgba(0,0,0,.14)}
+.seg label:has(input:focus-visible){outline:2px solid var(--acc-text);outline-offset:2px}
+.sw{width:18px;height:18px;border-radius:50%;border:1px solid rgba(0,0,0,.25);flex:none}
+.sw.w{background:#fff}.sw.b{background:#161413}
+.sw.on{background:#FFD7A1;box-shadow:0 0 10px 2px rgba(255,190,110,.8);border-color:#E9A24C}
+.sw.off{background:#D8D2C8}
+.drop{display:flex;align-items:center;gap:14px;border:1.5px dashed var(--line);border-radius:var(--r-sm);padding:12px;cursor:pointer;background:var(--field)}
+.drop:hover,.drop:focus-within{border-color:var(--acc-text)}
+#cfg .drop input{position:absolute;opacity:0;width:1px;height:1px;min-height:0}
+.drop .av{width:56px;height:56px;border-radius:50%;border:1px solid var(--line);background:#fff center/cover no-repeat;display:grid;place-items:center;font:700 9px/1.15 Roboto,Arial,sans-serif;color:#9a9a9a;text-align:center;flex:none}
+.drop span:last-child{font-size:15px;color:var(--muted)}
+.hp{position:absolute;left:-9999px}
+.send{display:grid;gap:12px;justify-items:start}
+.send .btn{min-height:54px;padding-inline:32px;font-size:17px;background:var(--ink);color:var(--bg)}
+.send .btn:hover{opacity:.9}
+.note{font-size:14px;color:var(--muted);display:flex;gap:8px;align-items:center}
+.note .ico{width:18px;height:18px;color:#1C7C47}
+.msg{border-radius:var(--r-sm);padding:14px 16px;font-size:15px}
+.msg.ok{background:#E7F3EC;color:#14532D}
+.msg.ko{background:#FBEAEA;color:#7F1D1D}
+.config{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(24px,4vw,56px);align-items:start}
+.stage{position:sticky;top:88px;display:grid;justify-items:center;gap:12px}
+.stage .m3{width:min(390px,100%)}
+.stage .cap{font-size:13px;color:var(--muted);text-align:center}
+@media (max-width:980px){
+  .config{grid-template-columns:minmax(0,1fr)}
+  .stage{order:-1;top:64px;z-index:5;grid-template-columns:auto minmax(0,1fr);justify-items:start;align-items:center;padding:10px 14px;margin-inline:-20px;background:var(--bar-bg);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .stage .m3{width:92px}
+  .stage .cap{text-align:left}
+}
+
+/* faq */
+details{border-bottom:1px solid var(--line)}
+details:first-child{border-top:1px solid var(--line)}
+summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 0;font-weight:600;font-size:17px;min-height:48px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"";width:10px;height:10px;flex:none;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:rotate(45deg) translate(-3px,-3px);transition:transform .25s}
+details[open] summary::after{transform:rotate(225deg) translate(-3px,-3px)}
+details p{padding:0 0 20px;color:var(--muted);max-width:64ch}
+footer{padding:36px 0 calc(36px + env(safe-area-inset-bottom));font-size:14px;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between;align-items:center}
+footer a{text-decoration:none}
+footer span{display:inline-flex;align-items:center;gap:8px}
+
+
+:root{--bg:#FFFFFF;--surface:#FFFFFF;--soft:#FAFAFA;--ink:#262626;--muted:#737373;--line:#DBDBDB;--chip:#EFEFEF;--field:#FAFAFA;
+  --acc:#C9A45C;--acc-hover:#D5B470;--acc-ink:#262626;--acc-text:#8A6727;--ring:rgba(201,164,92,.25);--bar-bg:rgba(255,255,255,.95);
+  --r:12px;--r-sm:8px;--r-btn:8px;--sans:"Schibsted Grotesk",system-ui,sans-serif;--display:"Schibsted Grotesk",system-ui,sans-serif;
+  --ring-grad:conic-gradient(from 200deg,#FFE3B8,#E9B867,#A87A2E,#E9B867,#FFE3B8);color-scheme:light}
+header{background:rgba(255,255,255,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:22px;letter-spacing:-.03em;text-decoration:none}
+.logo img{width:30px;height:30px;border-radius:8px}
+h1,h2{font-weight:800;letter-spacing:-.035em;line-height:1.02}
+h2{font-size:clamp(30px,4vw,46px)}
+h3{font-size:17px;font-weight:700}
+section{padding-block:clamp(56px,8vw,104px)}
+.sec-head{display:grid;gap:10px;max-width:58ch;margin-bottom:clamp(28px,4vw,44px)}
+.sec-head p{color:var(--muted);font-size:18px}
+.handle{font-weight:700}
+
+/* stories: the four real clients, then yours */
+.stories{border-bottom:1px solid var(--line);background:var(--soft)}
+.stories ul{display:flex;gap:clamp(16px,3vw,34px);list-style:none;margin:0 auto;padding-block:18px;overflow-x:auto}
+.stories li{display:grid;justify-items:center;gap:6px;flex:none;width:84px;font-size:13px;text-align:center;line-height:1.25}
+.story{display:block;width:72px;height:72px;border-radius:50%;padding:3px;background:var(--ring-grad)}
+.story img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:3px solid #fff;background:#fff}
+.story.add{background:none;border:1.5px dashed #B9B9B9;display:grid;place-items:center;font-size:30px;font-weight:300;color:var(--muted);text-decoration:none}
+.stories a{text-decoration:none}
+
+/* hero: a post. Media = the live mirror, caption = the headline */
+.hero{padding-block:clamp(28px,5vw,64px)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,470px) minmax(0,1fr);gap:clamp(28px,6vw,88px);align-items:center}
+.post{border:1px solid var(--line);border-radius:var(--r);background:#fff;overflow:hidden}
+.post-top{display:flex;align-items:center;gap:12px;padding:12px 14px}
+.post-top .story{width:42px;height:42px;padding:2px}
+.post-top .story img{border-width:2px}
+.post-top p{line-height:1.25;font-size:14px}
+.post-top small{display:block;color:var(--muted);font-size:12.5px}
+.post-top .dots{margin-left:auto;color:var(--ink)}
+.media{background:radial-gradient(90% 70% at 50% 40%,#FFFFFF 0%,#EEEEEE 100%);display:grid;justify-items:center;padding:18px 0 0}
+.media .m3{width:min(330px,86%)}
+.acts{display:flex;align-items:center;gap:16px;padding:12px 14px 4px}
+.acts .ico{width:26px;height:26px}
+.acts .save{margin-left:auto}
+.acts .heart{transition:fill .3s,stroke .3s}
+.post.liked .heart{fill:#C9A45C;stroke:#C9A45C}
+.post-cap{padding:4px 14px 16px;font-size:14px}
+.post-cap .muted{color:var(--muted)}
+.cap-col h1{font-size:clamp(44px,6.4vw,84px)}
+.cap-col .who{display:flex;align-items:center;gap:10px;font-size:15px;margin-bottom:18px}
+.cap-col .who .flag{font-size:16px}
+.lead{font-size:clamp(17px,1.5vw,20px);color:var(--muted);max-width:42ch;margin-top:20px}
+.try{margin-top:30px;max-width:480px}
+.try label{display:block;font-size:15px;font-weight:600;margin-bottom:10px}
+.try .hint{font-size:14px;color:var(--muted);margin-top:8px}
+@media (max-width:860px){.hero .wrap{grid-template-columns:minmax(0,1fr)}.cap-col{order:-1}.post{max-width:470px;margin-inline:auto;width:100%}}
+
+/* grid of real installations */
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
+.grid3 figure{position:relative;margin:0;overflow:hidden}
+.grid3 img{width:100%;aspect-ratio:4/5;object-fit:cover}
+.grid3 figcaption{position:absolute;left:0;right:0;bottom:0;padding:40px 16px 14px;background:linear-gradient(transparent,rgba(0,0,0,.6));color:#fff;font-size:14px;display:flex;align-items:center;gap:10px}
+.grid3 figcaption img{width:32px;height:32px;aspect-ratio:1;border-radius:50%;border:2px solid #fff;background:#fff}
+.grid3 figcaption b{display:block;font-weight:700}
+@media (max-width:700px){.grid3{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:80%;overflow-x:auto;scroll-snap-type:x mandatory}.grid3 figure{scroll-snap-align:start}}
+
+/* how it works: a carousel post, one slide per step */
+.carousel-sec{background:var(--soft);border-block:1px solid var(--line)}
+.carousel-sec .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,470px);gap:clamp(28px,6vw,88px);align-items:center}
+.slides{display:grid;grid-auto-flow:column;grid-auto-columns:100%;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.slides::-webkit-scrollbar{display:none}
+.slide{scroll-snap-align:start;aspect-ratio:4/5;padding:36px 32px;display:grid;align-content:space-between;background:#fff}
+.slide:nth-child(2){background:#F6F1E7}.slide:nth-child(3){background:#262626;color:#fff}.slide:nth-child(4){background:#EFE6D4}
+.slide .k{font-weight:700;font-size:15px;color:var(--acc-text)}
+.slide:nth-child(3) .k{color:#E9B867}
+.slide h3{font-size:clamp(30px,3.6vw,42px);font-weight:800;letter-spacing:-.03em;line-height:1.05}
+.slide p{font-size:17px;max-width:30ch;margin-top:14px;opacity:.85}
+.dots-row{display:flex;justify-content:center;gap:6px;padding:12px}
+.dots-row span{width:6px;height:6px;border-radius:50%;background:#C7C7C7}
+.dots-row span.on{background:var(--acc)}
+@media (max-width:860px){.carousel-sec .wrap{grid-template-columns:minmax(0,1fr)}.carousel-sec .post{max-width:470px;margin-inline:auto;width:100%}}
+
+/* product: "about this account" style rows */
+.about{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(28px,6vw,80px);align-items:center}
+.about>img{border-radius:var(--r);border:1px solid var(--line)}
+.rows{list-style:none;margin:24px 0 0;padding:0;border:1px solid var(--line);border-radius:var(--r)}
+.rows li{display:flex;gap:14px;align-items:center;padding:14px 18px;border-top:1px solid var(--line)}
+.rows li:first-child{border-top:0}
+.rows .ico{color:var(--ink)}
+.rows b{display:block;font-weight:600}
+.rows span{color:var(--muted);font-size:15px}
+@media (max-width:860px){.about{grid-template-columns:minmax(0,1fr)}.about>img{max-width:440px}}
+
+/* configurator */
+#creer{background:var(--soft);border-top:1px solid var(--line)}
+.stage{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.stage .top{display:flex;align-items:center;gap:10px;width:100%;font-size:14px}
+.stage .top .story{width:34px;height:34px;padding:2px}
+@media (max-width:980px){.stage{border-radius:0;border-inline:0}.stage .top{display:none}}
+
+/* instagram profile */
+.ig{display:block;text-decoration:none;max-width:935px;margin-inline:auto}
+.ig-head{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(20px,6vw,80px);align-items:center;padding-bottom:28px;border-bottom:1px solid var(--line);margin-bottom:4px}
+.ig-head .story{width:clamp(86px,14vw,150px);height:auto;aspect-ratio:1}
+.ig-head .story img{background:#000}
+.ig-l1{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.ig-user{font-size:22px;font-weight:500}
+.ig-bio{margin-top:12px;font-size:15px}
+.ig-bio b{display:flex;align-items:center;gap:8px}
+.ig-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
+.ig-grid img{width:100%;aspect-ratio:4/5;object-fit:cover}
+@media (max-width:640px){.ig-grid img:nth-child(n+10){display:none}}
+
+/* faq as a comment thread */
+.faq{max-width:760px;margin-inline:auto}
+.faq summary{gap:14px;justify-content:flex-start}
+.faq summary::before{content:"";width:32px;height:32px;border-radius:50%;flex:none;background:#EFEFEF url(img/logo-square.png) center/cover;border:1px solid var(--line)}
+.faq summary::after{margin-left:auto}
+.faq details p{padding-left:46px}
+
+/* final: a direct message */
+.dm{max-width:760px;margin-inline:auto;border:1px solid var(--line);border-radius:var(--r);padding:clamp(24px,4vw,40px);display:grid;gap:18px}
+.bubble{justify-self:start;background:#EFEFEF;border-radius:22px;padding:12px 18px;max-width:46ch}
+.bubble.me{justify-self:end;background:var(--acc);color:var(--acc-ink)}
+.dm .ctas{display:flex;flex-wrap:wrap;gap:12px;justify-content:flex-end}
+
+</style>
+</head>
+<body>
+<header id="hdr">
+  <div class="wrap nav">
+    <a class="logo" href="#top"><img src="img/logo-square.png" alt="">instamirror</a>
+    <ul>
+      <li><a href="#clients">Réalisations</a></li>
+      <li><a href="#etapes">Comment ça marche</a></li>
+      <li><a href="#miroir">Le miroir</a></li>
+      <li><a href="#faq">Questions</a></li>
+    </ul>
+    <a class="btn btn-acc" href="#creer">Créer mon miroir</a>
+  </div>
+</header>
+
+<main id="top">
+  <div class="stories" aria-label="Nos clients">
+    <ul class="wrap"><li><span class="story"><img src="img/logo-jungle.png" alt=""></span>The Jungle</li><li><span class="story"><img src="img/logo-chezpichi.png" alt=""></span>Chez Pichi</li><li><span class="story"><img src="img/logo-mrchour.png" alt=""></span>Mr Chour</li><li><span class="story"><img src="img/logo-mrchour-elite.png" alt=""></span>Mr Chour Elite</li><li><a class="story add" href="#creer" aria-label="Créer votre miroir">+</a>Le vôtre</li></ul>
+  </div>
+
+  <section class="hero">
+    <div class="wrap">
+      <article class="post" id="hero-post">
+        <div class="post-top"><span class="story"><img src="img/logo-square.png" alt=""></span><p><span class="handle">instamirror.ci</span><small>Abidjan, Côte d'Ivoire</small></p><svg class="ico dots" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg></div>
+        <div class="media"><div class="m3 white" id="hero-m3" role="img" aria-label="Aperçu 3D d'un miroir Instamirror à votre nom"></div></div>
+        <div class="acts"><svg class="ico heart" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7Z"/></svg><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg><svg class="ico save" viewBox="0 0 24 24" aria-hidden="true"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg></div>
+        <p class="post-cap"><span class="handle">instamirror.ci</span> Rendu 3D, version blanche, 120 × 63 cm. <span class="muted">Tapez votre nom à droite, il s'écrit sur le miroir.</span></p>
+      </article>
+      <div class="cap-col">
+        <p class="who"><span class="flag" aria-hidden="true"></span>Made in Côte d'Ivoire</p>
+        <h1>Le miroir qui rend votre lieu viral.</h1>
+        <p class="lead">Un miroir lumineux de 120 cm habillé comme un post Instagram, à votre nom. Vos clients se prennent en photo devant, la publient et vous identifient.</p>
+        <form class="try" id="try" action="#creer">
+        <label for="try-user">Essayez avec le nom Instagram de votre lieu</label>
+        <div class="box">
+          <span class="at" aria-hidden="true">@</span>
+          <input id="try-user" autocomplete="off" autocapitalize="none" spellcheck="false" maxlength="30" placeholder="votre.nom.insta">
+          <button class="btn btn-acc" type="submit">Personnaliser</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </section>
+
+  <section id="clients" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head"><h2>Déjà en place à Abidjan</h2><p>Des restaurants et des bars où les clients s'arrêtent pour la photo avant de passer à table.</p></div>
+      <div class="grid3">
+        <figure><img src="img/jungle-selfie.jpg" alt="Une cliente se prend en photo dans le miroir noir de The Jungle" loading="lazy" width="825" height="1100"><figcaption><img src="img/logo-jungle.png" alt=""><span><b>The Jungle</b>Version noire</span></figcaption></figure>
+        <figure><img src="img/chezpichi.jpg" alt="Une cliente se prend en photo dans le miroir blanc de Chez Pichi" loading="lazy" width="825" height="1100"><figcaption><img src="img/logo-chezpichi.png" alt=""><span><b>Chez Pichi</b>Version blanche</span></figcaption></figure>
+        <figure><img src="img/mrchour.jpg" alt="Miroir lumineux Instamirror de Mr Chour" loading="lazy" width="1100" height="830"><figcaption><img src="img/logo-mrchour.png" alt=""><span><b>Mr Chour</b>Avec LED</span></figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="carousel-sec" id="etapes">
+    <div class="wrap">
+      <div class="sec-head" style="margin:0"><h2>De votre idée au miroir installé, en 4 étapes</h2><p>Vous n'avez rien à dessiner. Faites défiler le post : vous remplissez, on prépare, vous validez, on livre.</p></div>
+      <article class="post">
+        <div class="post-top"><span class="story"><img src="img/logo-square.png" alt=""></span><p><span class="handle">instamirror.ci</span><small>Comment ça marche</small></p><svg class="ico dots" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg></div>
+        <div class="slides" id="slides" tabindex="0" aria-label="Les 4 étapes, faites défiler">
+          <div class="slide"><span class="k">1 / 4</span><div><h3>Vous personnalisez</h3><p>Logo, nom, compteurs, légende, hashtags. Version blanche ou noire, avec ou sans LED.</p></div></div>
+          <div class="slide"><span class="k">2 / 4</span><div><h3>Vous validez la maquette</h3><p>On vous envoie le visuel exact sur WhatsApp et on ajuste jusqu'à ce qu'il vous plaise.</p></div></div>
+          <div class="slide"><span class="k">3 / 4</span><div><h3>On fabrique en 5 jours ouvrés</h3><p>Dans notre atelier en Côte d'Ivoire, à partir de votre validation.</p></div></div>
+          <div class="slide"><span class="k">4 / 4</span><div><h3>On livre à Abidjan</h3><p>Le miroir arrive monté sur son chevalet en bois. Il ne reste qu'à le brancher.</p></div></div>
+        </div>
+        <div class="dots-row" id="dots" aria-hidden="true"><span class="on"></span><span></span><span></span><span></span></div>
+      </article>
+    </div>
+  </section>
+
+  <section id="miroir">
+    <div class="wrap about">
+      <img src="img/specs-atelier.jpg" alt="Miroir Instamirror sur chevalet, avec ses dimensions et ses zones personnalisables" loading="lazy" width="825" height="1100">
+      <div>
+        <h2>Un vrai post Instagram, en grand</h2>
+        <p class="lead">Chaque élément reprend votre identité : photo de profil, nom, compteurs, légende, hashtags, et votre logo dans la barre du bas.</p>
+        <ul class="rows">
+          <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="1"/></svg><div><b>120 × 63 cm</b><span>Le format du miroir</span></div></li>
+          <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg><div><b>Contour LED blanc chaud</b><span>En option, se branche sur une prise standard</span></div></li>
+          <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 22 12 3l4 19"/><path d="M6 16h12"/></svg><div><b>Chevalet en bois inclus</b><span>Rien à percer, il suffit de le poser</span></div></li>
+          <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 0 0 20z" fill="currentColor"/></svg><div><b>Version blanche ou noire</b><span>Avec tous vos textes et votre logo</span></div></li>
+          <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><div><b>5 jours ouvrés</b><span>De fabrication après validation de la maquette</span></div></li>
+          <li><span class="flag" aria-hidden="true" style="font-size:18px"></span><div><b>Fabriqué en Côte d'Ivoire</b><span>Livré à Abidjan</span></div></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="creer">
+    <div class="wrap">
+      <div class="sec-head"><h2>Créez votre miroir</h2><p>Chaque champ modifie le miroir en direct. Envoyez votre demande : on vous renvoie la maquette finale à valider avant fabrication.</p></div>
+      <div class="config">
+        <form id="cfg" name="commande-miroir" method="POST" action="/merci" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" novalidate>
+          <input type="hidden" name="form-name" value="commande-miroir">
+          <input type="hidden" name="fiche" id="fiche">
+          <p class="hp"><label>Ne pas remplir <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+
+          <fieldset>
+            <legend><span class="n">1</span>Le miroir</legend>
+            <div class="row">
+              <div class="field">
+                <p class="lbl" id="l-version">Version</p>
+                <div class="seg" role="radiogroup" aria-labelledby="l-version">
+                  <label><input type="radio" name="version" value="Blanche" id="v-white" checked><span class="sw w"></span>Blanche</label>
+                  <label><input type="radio" name="version" value="Noire" id="v-black"><span class="sw b"></span>Noire</label>
+                </div>
+              </div>
+              <div class="field">
+                <p class="lbl" id="l-led">Contour lumineux</p>
+                <div class="seg" role="radiogroup" aria-labelledby="l-led">
+                  <label><input type="radio" name="led" value="Avec LED" id="led-on" checked><span class="sw on"></span>Avec LED</label>
+                  <label><input type="radio" name="led" value="Sans LED" id="led-off"><span class="sw off"></span>Sans LED</label>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend><span class="n">2</span>Le haut du miroir</legend>
+            <div class="field">
+              <span class="lbl">Logo ou photo de profil</span>
+              <label class="drop" for="f-logo">
+                <span class="av" id="logo-thumb">VOTRE<br>LOGO</span>
+                <span id="logo-name">Choisir une image (PNG ou JPG)</span>
+                <input type="file" id="f-logo" name="logo" accept="image/png,image/jpeg,image/webp,image/svg+xml">
+              </label>
+              <span class="help">Il apparaît en haut et dans la barre du bas. Un fichier net donne un meilleur rendu.</span>
+            </div>
+            <div class="row">
+              <div class="field" id="w-user"><label for="f-user">Nom d'utilisateur</label><input id="f-user" name="username" value="votre.nom.insta" maxlength="30" autocapitalize="none" spellcheck="false" required aria-describedby="e-user"><span class="err" id="e-user">Indiquez le nom à afficher.</span></div>
+              <div class="field"><label for="f-time">Heure affichée</label><input id="f-time" name="heure" value="19:45" maxlength="5" inputmode="numeric"></div>
+            </div>
+            <div class="field"><label for="f-sub">Sous-titre <span class="opt">(optionnel)</span></label><input id="f-sub" name="sous_titre" placeholder="Ex. Abidjan, Côte d'Ivoire" maxlength="44"><span class="help">Sous le nom, comme un lieu ou une catégorie.</span></div>
+          </fieldset>
+
+          <fieldset>
+            <legend><span class="n">3</span>Les compteurs</legend>
+            <div class="row4">
+              <div class="field"><label for="f-likes">J'aime</label><input id="f-likes" name="likes" value="2,4 K" maxlength="7"></div>
+              <div class="field"><label for="f-com">Commentaires</label><input id="f-com" name="commentaires" value="683" maxlength="7"></div>
+              <div class="field"><label for="f-rep">Republications</label><input id="f-rep" name="republications" value="38" maxlength="7"></div>
+              <div class="field"><label for="f-share">Partages</label><input id="f-share" name="partages" value="91" maxlength="7"></div>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend><span class="n">4</span>La légende</legend>
+            <div class="field"><label for="f-l1">Première ligne <span class="opt">(à côté du nom)</span></label><input id="f-l1" name="ligne1" value="Personnalisez votre texte ici." maxlength="40"></div>
+            <div class="field"><label for="f-text">Texte</label><textarea id="f-text" name="texte" maxlength="200" aria-describedby="h-text">Horaires d'ouverture.
+Adresse.
++225 07 00 00 00 00</textarea><span class="help" id="h-text">Une info par ligne : horaires, adresse, téléphone, livraison. 5 lignes maximum.</span></div>
+            <div class="row">
+              <div class="field"><label for="f-tags">Hashtags <span class="opt">(optionnel)</span></label><input id="f-tags" name="hashtags" value="#instamirror #photo #pub" maxlength="50"></div>
+              <div class="field"><label for="f-ago">Date du post</label><input id="f-ago" name="date_post" value="il y a 1 heure" maxlength="22"></div>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend><span class="n">5</span>Vos coordonnées</legend>
+            <div class="row">
+              <div class="field" id="w-name"><label for="c-name">Nom et prénom</label><input id="c-name" name="nom" autocomplete="name" required aria-describedby="e-name"><span class="err" id="e-name">Indiquez votre nom.</span></div>
+              <div class="field"><label for="c-biz">Établissement</label><input id="c-biz" name="etablissement" autocomplete="organization"></div>
+            </div>
+            <div class="row">
+              <div class="field" id="w-phone"><label for="c-phone">Téléphone WhatsApp</label><input id="c-phone" name="telephone" type="tel" autocomplete="tel" placeholder="07 00 00 00 00" required aria-describedby="e-phone"><span class="err" id="e-phone">Indiquez un numéro WhatsApp pour recevoir la maquette.</span></div>
+              <div class="field"><label for="c-mail">Email <span class="opt">(optionnel)</span></label><input id="c-mail" name="email" type="email" autocomplete="email"></div>
+            </div>
+            <div class="row">
+              <div class="field"><label for="c-city">Commune</label><input id="c-city" name="commune" placeholder="Ex. Cocody, Marcory"></div>
+              <div class="field"><label for="c-qty">Quantité</label><input id="c-qty" name="quantite" type="number" min="1" max="50" value="1"></div>
+            </div>
+            <div class="field"><label for="c-msg">Message <span class="opt">(optionnel)</span></label><textarea id="c-msg" name="message" style="min-height:88px" placeholder="Date souhaitée, questions"></textarea></div>
+          </fieldset>
+
+          <div class="send">
+            <button class="btn btn-ink" type="submit" id="submit">Envoyer ma demande</button>
+            <p class="note"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.7 9a1 1 0 0 1-.7 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.2-2.7a1.2 1.2 0 0 1 1.6 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>Rien n'est fabriqué avant votre validation de la maquette finale.</p>
+            <div class="msg" id="msg" role="status" hidden></div>
+          </div>
+        </form>
+        <div class="stage" id="stage">
+          <div class="top"><span class="story"><img src="img/logo-square.png" alt=""></span><span class="handle">Votre miroir</span></div>
+          <div class="m3 white" id="cfg-m3" role="img" aria-label="Aperçu 3D de votre miroir personnalisé"></div>
+          <p class="cap">Rendu 3D à l'échelle, 120 × 63 cm</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="instagram">
+    <div class="wrap">
+      <a class="ig" href="https://www.instagram.com/instamirror.ci/" target="_blank" rel="noopener" aria-label="Voir le compte Instagram @instamirror.ci">
+        <div class="ig-head">
+          <span class="story"><img src="img/logo-square.png" alt=""></span>
+          <div>
+            <div class="ig-l1"><span class="ig-user">instamirror.ci</span><span class="btn btn-acc" style="min-height:36px;padding:6px 18px">Suivre</span></div>
+            <div class="ig-bio"><b>Instamirror CI <span class="flag" aria-hidden="true"></span></b>Le miroir qui vous fait de la pub<br>Made in Côte d'Ivoire<br>Créez le vôtre</div>
+          </div>
+        </div>
+        <div class="ig-grid">
+          <img src="img/ig/post-01.jpg" alt="Deux amies dans un miroir Instamirror en extérieur" loading="lazy" width="600" height="750">
+          <img src="img/ig/post-02.jpg" alt="Selfie dans le miroir noir de The Jungle" loading="lazy" width="600" height="750">
+          <img src="img/ig/post-03.jpg" alt="Miroir Instamirror lumineux et ses zones personnalisables" loading="lazy" width="600" height="750">
+          <img src="img/ig/post-04.jpg" alt="Les dimensions du miroir Instamirror" loading="lazy" width="600" height="750">
+          <img src="img/ig/post-05.jpg" alt="Instamirror, le miroir qui rend votre lieu viral" loading="lazy" width="600" height="750">
+          <img src="img/ig/post-06.jpg" alt="Selfie devant un miroir Instamirror dans un restaurant" loading="lazy" width="600" height="750">
+          <img src="img/ig/post-07.jpg" alt="Deux amies devant un miroir Instamirror sur un mur terracotta" loading="lazy" width="600" height="750">
+          <img src="img/ig/post-08.jpg" alt="Selfie dans un miroir Instamirror en boutique" loading="lazy" width="600" height="750">
+          <img src="img/ig/post-09.jpg" alt="Miroir Instamirror sur chevalet devant un mur terracotta" loading="lazy" width="600" height="750">
+          <img src="img/ig/post-10.jpg" alt="Selfie à deux dans un miroir Instamirror en terrasse" loading="lazy" width="600" height="750">
+          <img src="img/ig/post-11.jpg" alt="Miroir Instamirror lumineux dans un restaurant le soir" loading="lazy" width="600" height="750">
+          <img src="img/ig/post-12.jpg" alt="Miroir Instamirror lumineux dans un hall" loading="lazy" width="600" height="750">
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <section id="faq" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head" style="margin-inline:auto;text-align:center;justify-items:center"><h2>Vos questions</h2><p>Une autre question ? Écrivez-nous sur <a href="https://wa.me/message/THBIEJRZPCD7P1" target="_blank" rel="noopener">WhatsApp</a>.</p></div>
+      <div class="faq"><details open><summary>Qu'est-ce qu'un miroir Instamirror ?</summary><p>C'est un miroir de 120 × 63 cm habillé comme un post Instagram : photo de profil, nom du compte, compteurs de likes, légende et icônes. Vos clients se placent devant, se prennent en photo et obtiennent une image prête à publier, avec votre nom et votre logo bien visibles.</p></details>
+        <details><summary>Pourquoi installer un miroir Instagram dans mon établissement ?</summary><p>Chaque photo prise devant le miroir montre votre logo et votre nom de compte. Vos clients la publient en story ou en post et vous identifient : c'est de la publicité gratuite auprès de leurs abonnés, et un moyen simple de gagner des abonnés et de la visibilité à Abidjan.</p></details>
+        <details><summary>Pour quels établissements ?</summary><p>Restaurants, bars, clubs, lounges, hôtels, pâtisseries, boutiques, salons de coiffure et de beauté, salles de sport, et aussi les événements : mariages, anniversaires, lancements de produits, salons professionnels.</p></details>
+        <details><summary>Est-ce que je dois fournir un design ?</summary><p>Non. Remplissez le configurateur avec votre logo et vos infos. Notre équipe prépare la maquette finale et vous l'envoie pour validation. Rien n'est fabriqué tant que vous n'avez pas validé.</p></details>
+        <details><summary>Qu'est-ce que je peux personnaliser ?</summary><p>Tout : la version (blanche ou noire), le contour LED, le logo, le nom d'utilisateur, le sous-titre, l'heure, les quatre compteurs (j'aime, commentaires, republications, partages), la légende, les hashtags et la date du post.</p></details>
+        <details><summary>Quelles sont les dimensions du miroir ?</summary><p>Le miroir mesure 120 cm de haut et 63 cm de large. Il est livré avec un chevalet en bois qui permet de l'installer partout, sans percer de mur.</p></details>
+        <details><summary>Quel est le délai de fabrication ?</summary><p>5 jours ouvrés à partir de la validation de votre maquette. Le miroir est fabriqué en Côte d'Ivoire.</p></details>
+        <details><summary>Faut-il une prise électrique ?</summary><p>Pour la version avec LED, oui : le contour lumineux se branche sur une prise standard. Prévoyez un emplacement près d'une prise, idéalement à l'entrée, près du bar ou dans un endroit bien éclairé.</p></details>
+        <details><summary>Livrez-vous à Abidjan ?</summary><p>Oui, nous livrons à Abidjan. Pour une autre ville de Côte d'Ivoire, écrivez-nous sur WhatsApp et nous vous indiquerons les conditions.</p></details>
+        <details><summary>Comment entretenir le miroir ?</summary><p>Un chiffon doux et sec, ou légèrement humide, suffit. Évitez les produits abrasifs sur les parties imprimées.</p></details>
+        <details><summary>Comment commander ?</summary><p>Personnalisez votre miroir dans le configurateur et envoyez votre demande, ou écrivez-nous directement sur WhatsApp au +225 07 87 14 87 53.</p></details></div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="dm">
+        <p class="bubble">Bonjour, je voudrais un miroir pour mon restaurant.</p>
+        <p class="bubble me">Avec plaisir. Envoyez-nous votre logo, on vous prépare une maquette à votre nom.</p>
+        <div class="ctas">
+          <a class="btn" href="https://www.instagram.com/instamirror.ci/" target="_blank" rel="noopener">Voir @instamirror.ci</a>
+          <a class="btn btn-wa" href="https://wa.me/message/THBIEJRZPCD7P1" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.8-1.4a.5.5 0 0 0 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.7 11.7 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.4-.3Z"/></svg>Écrire au +225 07 87 14 87 53</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<script>
+// Carousel dots + the heart fills once, when the LED lights.
+(function(){var s=document.getElementById("slides"),d=document.querySelectorAll("#dots span");
+s.addEventListener("scroll",function(){var i=Math.round(s.scrollLeft/s.clientWidth);d.forEach(function(x,j){x.classList.toggle("on",i===j)})},{passive:true});
+setTimeout(function(){document.getElementById("hero-post").classList.add("liked")},900);})();
+</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Qu'est-ce qu'un miroir Instamirror ?", "acceptedAnswer": {"@type": "Answer", "text": "C'est un miroir de 120 × 63 cm habillé comme un post Instagram : photo de profil, nom du compte, compteurs de likes, légende et icônes. Vos clients se placent devant, se prennent en photo et obtiennent une image prête à publier, avec votre nom et votre logo bien visibles."}}, {"@type": "Question", "name": "Pourquoi installer un miroir Instagram dans mon établissement ?", "acceptedAnswer": {"@type": "Answer", "text": "Chaque photo prise devant le miroir montre votre logo et votre nom de compte. Vos clients la publient en story ou en post et vous identifient : c'est de la publicité gratuite auprès de leurs abonnés, et un moyen simple de gagner des abonnés et de la visibilité à Abidjan."}}, {"@type": "Question", "name": "Pour quels établissements ?", "acceptedAnswer": {"@type": "Answer", "text": "Restaurants, bars, clubs, lounges, hôtels, pâtisseries, boutiques, salons de coiffure et de beauté, salles de sport, et aussi les événements : mariages, anniversaires, lancements de produits, salons professionnels."}}, {"@type": "Question", "name": "Est-ce que je dois fournir un design ?", "acceptedAnswer": {"@type": "Answer", "text": "Non. Remplissez le configurateur avec votre logo et vos infos. Notre équipe prépare la maquette finale et vous l'envoie pour validation. Rien n'est fabriqué tant que vous n'avez pas validé."}}, {"@type": "Question", "name": "Qu'est-ce que je peux personnaliser ?", "acceptedAnswer": {"@type": "Answer", "text": "Tout : la version (blanche ou noire), le contour LED, le logo, le nom d'utilisateur, le sous-titre, l'heure, les quatre compteurs (j'aime, commentaires, republications, partages), la légende, les hashtags et la date du post."}}, {"@type": "Question", "name": "Quelles sont les dimensions du miroir ?", "acceptedAnswer": {"@type": "Answer", "text": "Le miroir mesure 120 cm de haut et 63 cm de large. Il est livré avec un chevalet en bois qui permet de l'installer partout, sans percer de mur."}}, {"@type": "Question", "name": "Quel est le délai de fabrication ?", "acceptedAnswer": {"@type": "Answer", "text": "5 jours ouvrés à partir de la validation de votre maquette. Le miroir est fabriqué en Côte d'Ivoire."}}, {"@type": "Question", "name": "Faut-il une prise électrique ?", "acceptedAnswer": {"@type": "Answer", "text": "Pour la version avec LED, oui : le contour lumineux se branche sur une prise standard. Prévoyez un emplacement près d'une prise, idéalement à l'entrée, près du bar ou dans un endroit bien éclairé."}}, {"@type": "Question", "name": "Livrez-vous à Abidjan ?", "acceptedAnswer": {"@type": "Answer", "text": "Oui, nous livrons à Abidjan. Pour une autre ville de Côte d'Ivoire, écrivez-nous sur WhatsApp et nous vous indiquerons les conditions."}}, {"@type": "Question", "name": "Comment entretenir le miroir ?", "acceptedAnswer": {"@type": "Answer", "text": "Un chiffon doux et sec, ou légèrement humide, suffit. Évitez les produits abrasifs sur les parties imprimées."}}, {"@type": "Question", "name": "Comment commander ?", "acceptedAnswer": {"@type": "Answer", "text": "Personnalisez votre miroir dans le configurateur et envoyez votre demande, ou écrivez-nous directement sur WhatsApp au +225 07 87 14 87 53."}}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "LocalBusiness", "name": "Instamirror", "description": "Miroirs lumineux personnalisés au format post Instagram pour restaurants, bars, hôtels et boutiques. Fabriqués en Côte d'Ivoire.", "telephone": "+2250787148753", "address": {"@type": "PostalAddress", "addressLocality": "Abidjan", "addressCountry": "CI"}, "sameAs": ["https://www.instagram.com/instamirror.ci/"]}</script>
+
+<footer>
+  <div class="wrap"><span>© 2026 Instamirror, Abidjan</span><span>Fabriqué en Côte d'Ivoire <span class="flag" aria-hidden="true"></span></span><a href="https://www.instagram.com/instamirror.ci/" target="_blank" rel="noopener">@instamirror.ci</a></div>
+</footer>
+<nav class="bar" id="bar" aria-label="Actions rapides">
+  <a class="btn btn-wa" href="https://wa.me/message/THBIEJRZPCD7P1" target="_blank" rel="noopener" aria-label="Écrire sur WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.8-1.4a.5.5 0 0 0 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.7 11.7 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.4-.3Z"/></svg></a>
+  <a class="btn btn-acc" href="#creer">Créer mon miroir</a>
+</nav>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var logoURL=null, CK="#2E261E", CF="#FFFFFF", P="";
+
+  // Geometry taken from the Canva templates "Haut neutre" (2419×719) and "Bas neutre" (2419×1286).
+  // 63 cm = 2419 px, so 120 cm = 4608 px; the mirror zone fills the gap between the two panels.
+  var W=2419, H=4608, TOP=719, BOT=1286, BY=H-BOT;
+  // 3D studio plates (rendered in three.js) and where the printed face lands on them, in plate pixels.
+  var PLATE={w:760,h:1480,quad:[[70.77,106.59],[689.23,106.59],[687.3,1281.56],[72.7,1281.56]],src:{Blanche:"img/miroir-3d-blanc.webp",Noire:"img/miroir-3d-noir.webp"}};
+
+  function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;")}
+  function val(id){return $(id).value}
+  function state(){
+    return {
+      version: $("v-black").checked?"Noire":"Blanche",
+      led: $("led-on").checked,
+      user: (val("f-user")||"votre.nom.insta").replace(/^@/,""),
+      time: val("f-time"),
+      sub: val("f-sub").trim(),
+      likes: val("f-likes"), com: val("f-com"), rep: val("f-rep"), share: val("f-share"),
+      l1: val("f-l1"),
+      lines: val("f-text").split("\n").map(function(s){return s.trimEnd()}).filter(function(s,i,a){return s!==""||i<a.length-1}).slice(0,5),
+      tags: val("f-tags").trim(),
+      ago: val("f-ago")
+    };
+  }
+
+  // Icon drawings in their Canva slots (x, y, w, h in template pixels).
+  function ico(x,y,w,h,vb,body,sw){return '<svg x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" viewBox="'+vb+'" overflow="visible"><g fill="none" stroke="'+CK+'" stroke-width="'+(sw||7)+'" stroke-linecap="round" stroke-linejoin="round">'+body+'</g></svg>'}
+  function avatar(cx,cy,r,id){id=P+id;
+    var s='<clipPath id="'+id+'"><circle cx="'+cx+'" cy="'+cy+'" r="'+r+'"/></clipPath>';
+    if(logoURL){
+      s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="#fff"/><image href="'+logoURL+'" x="'+(cx-r)+'" y="'+(cy-r)+'" width="'+(2*r)+'" height="'+(2*r)+'" preserveAspectRatio="xMidYMid slice" clip-path="url(#'+id+')"/>';
+    } else {
+      var fs=r*0.36;
+      s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+(r-4)+'" fill="'+CF+'" stroke="#9a9a9a" stroke-width="5"/>'+
+         '<text x="'+cx+'" y="'+(cy-fs*0.75)+'" font-size="'+fs+'" fill="#9a9a9a" text-anchor="middle" font-family="Roboto,Arial,sans-serif">VOTRE</text>'+
+         '<text x="'+cx+'" y="'+(cy+fs*0.35)+'" font-size="'+fs+'" fill="#9a9a9a" text-anchor="middle" font-family="Roboto,Arial,sans-serif">LOGO</text>'+
+         '<text x="'+cx+'" y="'+(cy+fs*1.45)+'" font-size="'+fs+'" fill="#9a9a9a" text-anchor="middle" font-family="Roboto,Arial,sans-serif">ICI</text>';
+    }
+    return s;
+  }
+
+  // Everything printed on the two panels, in template pixels. The panels themselves come from the 3D plate.
+  function print(st,p){P=p;
+    var dark=st.version==="Noire";
+    var K=dark?"#FFFFFF":"#2E261E", TAG=dark?"#8FA2FF":"#5170FF";
+    CK=K; CF=dark?"#161413":"#FFFFFF";
+    var s='';
+    /* ---- top panel ---- */
+    s+='<text x="329" y="223" font-family="Montserrat,Arial,sans-serif" font-weight="700" font-size="68" fill="'+K+'" text-anchor="middle">'+esc(st.time)+'</text>';
+    s+='<rect x="969" y="135" width="482" height="102" rx="51" fill="#0E0D0C"/>';
+    s+='<g fill="'+K+'"><rect x="1818" y="200" width="15" height="24" rx="3"/><rect x="1839" y="185" width="15" height="39" rx="3"/><rect x="1860" y="167" width="15" height="57" rx="3"/></g>';
+    s+='<g fill="none" stroke="'+K+'" stroke-width="10" stroke-linecap="round"><path d="M1925 186 Q1956 158 1987 186"/><path d="M1938 200 Q1956 184 1974 200"/></g><circle cx="1956" cy="216" r="8" fill="'+K+'"/>';
+    s+='<rect x="2040" y="172" width="108" height="50" rx="12" fill="'+K+'"/><rect x="2152" y="186" width="12" height="22" rx="4" fill="'+K+'"/>';
+    s+=avatar(242,489,102,"av1");
+    if(st.sub){
+      s+='<text class="t-user" x="370" y="478" font-family="Roboto,Arial,sans-serif" font-weight="700" font-size="75" fill="'+K+'">'+esc(st.user)+'</text>';
+      s+='<text class="t-sub" x="370" y="556" font-family="Roboto,Arial,sans-serif" font-size="54" fill="'+K+'" opacity=".85">'+esc(st.sub)+'</text>';
+    } else {
+      s+='<text class="t-user" x="370" y="516" font-family="Roboto,Arial,sans-serif" font-weight="700" font-size="75" fill="'+K+'">'+esc(st.user)+'</text>';
+    }
+    s+='<g fill="'+K+'"><circle cx="2156" cy="476" r="14"/><circle cx="2211" cy="476" r="14"/><circle cx="2267" cy="476" r="14"/></g>';
+
+    /* ---- bottom panel (y offset BY) ---- */
+    s+='<g transform="translate(0 '+BY+')">';
+    s+='<svg x="194" y="70" width="160" height="140" viewBox="0 0 64 56"><path d="M2.53725 8.94154C-2.65195 17.4906 1.00387 25.8117 5.59813 30.2281L32.4604 56L58.7557 30.3202C63.0287 25.5693 64.6666 20.5299 63.7569 14.9185C62.5004 7.1561 56.1037 1.13372 48.2017 0.273726C43.3553 -0.248088 38.6736 1.12342 35.0197 4.15976C34.0362 4.97672 33.1572 5.89005 32.3911 6.88277C31.4821 5.75248 30.4163 4.71854 29.2108 3.80219C25.009 0.608875 19.6604 -0.658994 14.5228 0.327059C9.65689 1.26705 5.28924 4.40582 2.53725 8.94154Z" fill="#FF3131" stroke="'+K+'" stroke-width="1"/></svg>';
+    s+='<g font-family="Roboto,Arial,sans-serif" font-size="75" fill="'+K+'" text-anchor="middle">'+
+       '<text class="t-n" x="456" y="166">'+esc(st.likes)+'</text>'+
+       '<text class="t-n" x="806" y="166">'+esc(st.com)+'</text>'+
+       '<text class="t-n" x="1103" y="166">'+esc(st.rep)+'</text>'+
+       '<text class="t-n" x="1366" y="166">'+esc(st.share)+'</text></g>';
+    s+=ico(559,70,155,140,"0 0 100 90",'<path d="M50 6C25 6 6 22 6 42C6 62 25 78 50 78C57 78 63 77 69 74L92 84L84 64C90 58 94 50 94 42C94 22 75 6 50 6Z"/>',6);
+    s+=ico(899,70,141,140,"0 0 100 100",'<path d="M14 58V40Q14 26 28 26H84M70 12L84 26L70 40"/><path d="M86 42V60Q86 74 72 74H16M30 60L16 74L30 88"/>',9);
+    s+=ico(1165,86,138,108,"0 0 100 78",'<path d="M4 4H96L48 74V36Z"/><path d="M48 36L96 4"/>',6);
+    s+=ico(2112,87,105,127,"0 0 82 100",'<path d="M5 4H77V96L41 70L5 96Z"/>',7);
+    s+='<text class="t-cap1" x="169" y="368" font-family="Roboto,Arial,sans-serif" font-size="70" fill="'+K+'"><tspan font-weight="700" font-size="75">'+esc(st.user)+'</tspan><tspan dx="30">'+esc(st.l1)+'</tspan></text>';
+    var rows=st.lines.map(function(t){return {t:t,c:K}});
+    if(st.tags) rows.push({t:st.tags,c:TAG});
+    var first=470, last=790, n=rows.length;
+    var lh=n>1?Math.min(97.4,(last-first)/(n-1)):97.4, fs=Math.min(69.6,lh/1.33);
+    rows.forEach(function(r,i){
+      s+='<text class="fit" x="169" y="'+(first+i*lh).toFixed(1)+'" font-family="Roboto,Arial,sans-serif" font-size="'+fs.toFixed(1)+'" fill="'+r.c+'">'+esc(r.t)+'</text>';
+    });
+    s+='<text x="175" y="869" font-family="Roboto,Arial,sans-serif" font-size="52" fill="'+K+'" opacity=".8">'+esc(st.ago)+'</text>';
+    s+='<line x1="175" y1="918" x2="2250" y2="918" stroke="'+K+'" stroke-width="7" opacity=".7"/>';
+    s+=ico(169,958,167,159,"0 0 100 96",'<path d="M50 5L95 47H81V92H61V60H39V92H19V47H5Z"/>',6);
+    s+=ico(652,958,168,168,"0 0 100 100",'<rect x="6" y="6" width="88" height="88" rx="14"/><path d="M6 28H94M30 6V28M52 6V28M74 6V28"/><path d="M41 44L64 59L41 74Z"/>',6);
+    s+=ico(1128,958,159,159,"0 0 100 100",'<rect x="6" y="6" width="88" height="88" rx="22"/><path d="M50 26V74M26 50H74"/>',7);
+    s+=ico(1604,958,164,159,"0 0 100 100",'<circle cx="40" cy="40" r="32"/><path d="M63 63L94 94"/>',7);
+    s+=avatar(2160,1034,84,"av2");
+    s+='</g>';
+    return s;
+  }
+
+  // Projective map from the flat template onto the plate, then one affine per panel:
+  // keeps the vector text crisp while following the 3D perspective closely.
+  function solve(A,b){var n=b.length,i,j,k;for(i=0;i<n;i++){var m=i;for(k=i+1;k<n;k++)if(Math.abs(A[k][i])>Math.abs(A[m][i]))m=k;var t=A[i];A[i]=A[m];A[m]=t;t=b[i];b[i]=b[m];b[m]=t;
+    for(k=i+1;k<n;k++){var f=A[k][i]/A[i][i];for(j=i;j<n;j++)A[k][j]-=f*A[i][j];b[k]-=f*b[i]}}var x=[];for(i=n-1;i>=0;i--){var s=b[i];for(j=i+1;j<n;j++)s-=A[i][j]*x[j];x[i]=s/A[i][i]}return x}
+  function hom(src,dst){var A=[],b=[];for(var i=0;i<4;i++){var x=src[i][0],y=src[i][1],u=dst[i][0],v=dst[i][1];A.push([x,y,1,0,0,0,-u*x,-u*y]);b.push(u);A.push([0,0,0,x,y,1,-v*x,-v*y]);b.push(v)}return solve(A,b)}
+  function hp(h,x,y){var d=h[6]*x+h[7]*y+1;return [(h[0]*x+h[1]*y+h[2])/d,(h[3]*x+h[4]*y+h[5])/d]}
+  function aff(h,x0,y0,dx,dy){var q0=hp(h,x0,y0),q1=hp(h,x0+dx,y0),q2=hp(h,x0,y0+dy);var a=(q1[0]-q0[0])/dx,b=(q1[1]-q0[1])/dx,c=(q2[0]-q0[0])/dy,d=(q2[1]-q0[1])/dy;
+    return 'matrix('+[a,b,c,d,q0[0]-a*x0-c*y0,q0[1]-b*x0-d*y0].map(function(v){return +v.toFixed(5)}).join(',')+')'}
+  var H3=hom([[0,0],[W,0],[W,H],[0,H]],PLATE.quad);
+  var MT=aff(H3,0,0,W,TOP), MB=aff(H3,0,H,W,-BOT);
+
+  function mount(el,id){
+    var q=PLATE.quad.map(function(p){return p.join(",")}).join(" "), vb='viewBox="0 0 '+PLATE.w+' '+PLATE.h+'"';
+    el.innerHTML='<svg class="halo" '+vb+' aria-hidden="true"><defs><filter id="'+id+'-g1" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="30"/></filter><filter id="'+id+'-g2" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="7"/></filter></defs>'+
+      '<polygon points="'+q+'" fill="#FFC680" filter="url(#'+id+'-g1)"/><polygon points="'+q+'" fill="none" stroke="#FFE3B8" stroke-width="12" stroke-linejoin="round" filter="url(#'+id+'-g2)"/></svg>'+
+      '<img class="plate" src="'+PLATE.src.Blanche+'" alt="" width="'+PLATE.w+'" height="'+PLATE.h+'" decoding="async">'+
+      '<svg class="print" '+vb+' aria-hidden="true"></svg>';
+    return {el:el,id:id,img:el.querySelector("img"),svg:el.querySelector(".print")};
+  }
+  function fit(el,maxW,min){
+    try{
+      var fs=parseFloat(el.getAttribute("font-size")),guard=0;
+      while(el.getComputedTextLength()>maxW && fs>min && guard++<40){fs*=0.94;el.setAttribute("font-size",fs.toFixed(1));
+        Array.prototype.forEach.call(el.querySelectorAll("tspan[font-size]"),function(t){t.setAttribute("font-size",(parseFloat(t.getAttribute("font-size"))*0.94).toFixed(1))});}
+    }catch(e){}
+  }
+  function paint(m,st,lit){
+    var dark=st.version==="Noire",src=PLATE.src[st.version];
+    if(m.img.getAttribute("src")!==src) m.img.setAttribute("src",src);
+    m.el.classList.toggle("white",!dark);m.el.classList.toggle("lit",lit);
+    var id=m.id;
+    m.svg.innerHTML='<defs><clipPath id="'+id+'-ct"><rect width="'+W+'" height="'+TOP+'"/></clipPath><clipPath id="'+id+'-cb"><rect y="'+BY+'" width="'+W+'" height="'+BOT+'"/></clipPath></defs>'+
+      '<g transform="'+MT+'"><g clip-path="url(#'+id+'-ct)">'+print(st,id+'-a')+'</g></g>'+
+      '<g transform="'+MB+'"><g clip-path="url(#'+id+'-cb)">'+print(st,id+'-b')+'</g></g>';
+    Array.prototype.forEach.call(m.svg.querySelectorAll(".t-user,.t-sub"),function(t){fit(t,1700,30)});
+    Array.prototype.forEach.call(m.svg.querySelectorAll(".t-cap1"),function(t){fit(t,2080,34)});
+    Array.prototype.forEach.call(m.svg.querySelectorAll(".fit"),function(t){fit(t,2080,30)});
+    Array.prototype.forEach.call(m.svg.querySelectorAll(".t-n"),function(t){fit(t,190,36)});
+  }
+
+  var hero=mount($("hero-m3"),"h"), cfgm=mount($("cfg-m3"),"c"), heroOn=false;
+  // Preload the black plate so switching version is instant.
+  (new Image()).src=PLATE.src.Noire;
+
+  function render(){
+    var st=state();
+    paint(cfgm,st,st.led);
+    paint(hero,st,heroOn&&st.led);
+    $("fiche").value=JSON.stringify({
+      version:st.version, led:st.led?"Avec LED":"Sans LED", heure:st.time, username:st.user, sous_titre:st.sub,
+      likes:st.likes, commentaires:st.com, republications:st.rep, partages:st.share,
+      ligne1:st.l1, texte:st.lines.join("\n"), hashtags:st.tags, date_post:st.ago,
+      logo_fourni: !!logoURL
+    });
+  }
+
+  // Hero: the visitor types their @ straight onto the mirror; it fills the configurator too.
+  $("try-user").addEventListener("input",function(){
+    $("f-user").value=this.value.replace(/^@/,"").trim()||"votre.nom.insta";
+    render();
+  });
+  $("f-user").addEventListener("input",function(){
+    var v=this.value.replace(/^@/,"");$("try-user").value=v==="votre.nom.insta"?"":v;
+  });
+  $("try").addEventListener("submit",function(e){
+    e.preventDefault();
+    $("creer").scrollIntoView();
+    setTimeout(function(){$("f-l1").focus({preventScroll:true})},400);
+  });
+  // The one moment of motion: the hero mirror's LED switches on shortly after load.
+  setTimeout(function(){heroOn=true;render()},500);
+
+  $("cfg").addEventListener("input",render);
+  $("cfg").addEventListener("change",render);
+  $("f-logo").addEventListener("change",function(){
+    var f=this.files&&this.files[0];
+    if(logoURL){URL.revokeObjectURL(logoURL);logoURL=null}
+    if(f){
+      logoURL=URL.createObjectURL(f);
+      $("logo-thumb").style.backgroundImage="url('"+logoURL+"')";$("logo-thumb").textContent="";
+      $("logo-name").textContent=f.name;
+    }
+    render();
+  });
+
+  function showMsg(kind,html){var m=$("msg");m.className="msg "+kind;m.innerHTML=html;m.hidden=false}
+  $("cfg").addEventListener("submit",function(e){
+    e.preventDefault();
+    var bad=false;
+    [["f-user","w-user"],["c-name","w-name"],["c-phone","w-phone"]].forEach(function(p){
+      var ok=$(p[0]).value.trim()!=="";$(p[1]).classList.toggle("bad",!ok);$(p[0]).setAttribute("aria-invalid",ok?"false":"true");
+      if(!ok&&!bad){bad=true;$(p[0]).focus()}
+    });
+    if(bad){showMsg("ko","Indiquez votre nom, votre téléphone WhatsApp et votre nom d'utilisateur pour envoyer la demande.");return}
+    render();
+    var btn=$("submit");btn.disabled=true;btn.textContent="Envoi en cours…";
+    fetch("/",{method:"POST",body:new FormData($("cfg"))}).then(function(r){
+      if(!r.ok) throw new Error(r.status);
+      showMsg("ok","<b>Demande envoyée.</b> Nous préparons votre maquette et vous l'envoyons sur WhatsApp pour validation.");
+      btn.textContent="Demande envoyée";
+    }).catch(function(){
+      btn.disabled=false;btn.textContent="Envoyer ma demande";
+      showMsg("ko","L'envoi n'a pas abouti. Réessayez, ou écrivez-nous sur WhatsApp au <b>+225 07 87 14 87 53</b>.");
+    });
+  });
+  ["c-name","c-phone","f-user"].forEach(function(id){$(id).addEventListener("input",function(){var w=this.closest(".field");if(this.value.trim()){w.classList.remove("bad");this.removeAttribute("aria-invalid")}})});
+
+  // Header border once scrolled; mobile action bar hides while the form is on screen.
+  var hdr=$("hdr"),bar=$("bar");
+  addEventListener("scroll",function(){hdr.classList.toggle("scrolled",scrollY>8)},{passive:true});
+  if("IntersectionObserver" in window){
+    new IntersectionObserver(function(es){es.forEach(function(e){bar.classList.toggle("hide",e.isIntersecting)})},{rootMargin:"0px 0px -30% 0px"}).observe($("cfg"));
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.12});
+    Array.prototype.forEach.call(document.querySelectorAll(".reveal"),function(el){io.observe(el)});
+  } else Array.prototype.forEach.call(document.querySelectorAll(".reveal"),function(el){el.classList.add("in")});
+
+  if(document.fonts&&document.fonts.ready){document.fonts.ready.then(render)}
+  render();
+})();
+</script>
+</body>
+</html>
